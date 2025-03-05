@@ -1,0 +1,1052 @@
+// Variables
+$primary-color: #fff;
+$secondary-color: #000;
+$accent-color: #888;
+$font-primary: 'Poppins', sans-serif;
+$font-secondary: 'Roboto', sans-serif;
+$transition: all 0.3s ease;
+
+// Reset
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-primary;
+  color: $primary-color;
+  background-color: $secondary-color;
+  line-height: 1.6;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 3.5rem;
+  line-height: 1.2;
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+}
+
+h2 {
+  font-size: 2.5rem;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+h3 {
+  font-size: 2rem;
+  
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+}
+
+p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+// Layout
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section {
+  padding: 5rem 0;
+  
+  &-title {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+}
+
+// Header
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: $secondary-color;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+  z-index: 100;
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+  }
+  
+  &__logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: $primary-color;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    
+    &-icon {
+      margin-right: 0.5rem;
+      color: $primary-color;
+      transition: $transition;
+    }
+    
+    span {
+      display: inline-block;
+      font-size: 22px;
+    }
+    
+    &:hover {
+      .header__logo-icon {
+        transform: rotate(10deg);
+        color: $accent-color;
+      }
+    }
+  }
+  
+  &__nav {
+    display: flex;
+    align-items: center;
+    
+    @media (max-width: 768px) {
+      display: none;
+      position: absolute;
+      top: 80px;
+      left: 0;
+      width: 100%;
+      background-color: $secondary-color;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 1rem 2rem;
+      box-shadow: 0 5px 10px rgba(255, 255, 255, 0.1);
+      
+      &.active {
+        display: flex;
+      }
+    }
+  }
+  
+  &__menu {
+    display: flex;
+    list-style: none;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    &-item {
+      margin-left: 2rem;
+      
+      @media (max-width: 768px) {
+        margin-left: 0;
+        margin-bottom: 1rem;
+      }
+      
+      a {
+        color: $primary-color;
+        text-decoration: none;
+        font-weight: 500;
+        transition: $transition;
+        
+        &:hover {
+          color: $accent-color;
+        }
+      }
+    }
+  }
+  
+  &__cta {
+    margin-left: 2rem;
+    display: flex;
+    align-items: center;
+    
+    @media (max-width: 768px) {
+      margin-left: 0;
+      margin-top: 1rem;
+      width: 100%;
+      flex-direction: column;
+      
+      .btn {
+        display: block;
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+    }
+    
+    .btn {
+      padding: 0.5rem 1.2rem;
+      font-size: 0.9rem;
+      border-width: 1px;
+      
+      svg {
+        margin-right: 6px;
+      }
+    }
+    
+    .login-btn {
+      margin-right: 0.8rem;
+      
+      @media (max-width: 768px) {
+        margin-right: 0;
+      }
+    }
+    
+    .subscription-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 0.8rem;
+      
+      @media (max-width: 768px) {
+        margin-left: 0;
+      }
+    }
+  }
+  
+  &__mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: $primary-color;
+    
+    @media (max-width: 768px) {
+      display: block;
+    }
+  }
+}
+
+// Hero
+.hero {
+  padding: 10rem 0 5rem;
+  background-color: $secondary-color;
+  
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+  &__buttons{
+    display: flex;
+    gap: 1rem;
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+  
+  &__text {
+    flex: 1;
+    padding-right: 2rem;
+    
+    @media (max-width: 768px) {
+      padding-right: 0;
+      margin-bottom: 3rem;
+    }
+  }
+  
+  &__title {
+    margin-bottom: 1.5rem;
+  }
+  
+  &__subtitle {
+    font-size: 1.2rem;
+    color: $accent-color;
+    margin-bottom: 2rem;
+  }
+  
+  &__image {
+    flex: 1;
+    
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+// Features
+.features {
+  background-color: $secondary-color;
+  color: $primary-color;
+  
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &__item {
+    padding: 2rem;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: $transition;
+    
+    &:hover {
+      transform: translateY(-10px);
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    &-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    &-title {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+// Courses
+.courses {
+  background-color: $secondary-color;
+  
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    
+    @media (max-width: 992px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media (max-width: 576px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &__card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+    transition: $transition;
+    background-color: rgba(255, 255, 255, 0.05);
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2);
+    }
+    
+    &-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    &-content {
+      padding: 1.5rem;
+    }
+    
+    &-category {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      background-color: $primary-color;
+      color: $secondary-color;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    
+    &-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: $primary-color;
+    }
+    
+    &-instructor {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 1rem;
+      }
+      
+      span {
+        font-size: 0.9rem;
+        color: $accent-color;
+      }
+    }
+    
+    &-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      
+      .price {
+        font-weight: 700;
+        font-size: 1.2rem;
+      }
+      
+      .rating {
+        display: flex;
+        align-items: center;
+        
+        span {
+          margin-left: 0.5rem;
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+// Testimonials
+.testimonials {
+  background-color: $secondary-color;
+  color: $primary-color;
+  
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &__item {
+    padding: 2rem;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    
+    &-content {
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+    
+    &-author {
+      display: flex;
+      align-items: center;
+      
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 1rem;
+      }
+      
+      &-info {
+        h4 {
+          margin-bottom: 0.2rem;
+        }
+        
+        p {
+          margin-bottom: 0;
+          font-size: 0.9rem;
+          color: $accent-color;
+        }
+      }
+    }
+  }
+}
+
+// CTA
+.cta {
+  text-align: center;
+  background-color: $secondary-color;
+  color: $primary-color;
+  
+  &__title {
+    max-width: 700px;
+    margin: 0 auto 2rem;
+  }
+  
+  &__subtitle {
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    color: $accent-color;
+  }
+  
+  &__form {
+    max-width: 450px;
+    margin: 0 auto;
+    display: flex;
+    
+    @media (max-width: 576px) {
+      flex-direction: column;
+      max-width: 350px;
+    }
+    
+    input {
+      flex: 1;
+      padding: 0.7rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 5px 0 0 5px;
+      font-size: 0.9rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      color: $primary-color;
+      
+      @media (max-width: 576px) {
+        border-radius: 5px;
+        margin-bottom: 1rem;
+      }
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+  }
+}
+
+// Footer
+.footer {
+  background-color: $secondary-color;
+  color: $primary-color;
+  padding: 5rem 0 2rem;
+  
+  &__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    @media (max-width: 576px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &__about {
+    p {
+      margin-bottom: 1.5rem;
+    }
+    
+    &-social {
+      display: flex;
+      
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: $primary-color;
+        margin-right: 1rem;
+        transition: $transition;
+        
+        &:hover {
+          background-color: $primary-color;
+          color: $secondary-color;
+        }
+      }
+    }
+  }
+  
+  &__logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    
+    &-icon {
+      margin-right: 0.5rem;
+      color: $primary-color;
+    }
+  }
+  
+  &__nav {
+    h4 {
+      margin-bottom: 1.5rem;
+    }
+    
+    ul {
+      list-style: none;
+      
+      li {
+        margin-bottom: 0.8rem;
+        
+        a {
+          color: $accent-color;
+          text-decoration: none;
+          transition: $transition;
+          
+          &:hover {
+            color: $primary-color;
+          }
+        }
+      }
+    }
+  }
+  
+  &__bottom {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    @media (max-width: 576px) {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    &-copyright {
+      color: $accent-color;
+      
+      @media (max-width: 576px) {
+        margin-bottom: 1rem;
+      }
+    }
+    
+    &-links {
+      display: flex;
+      
+      @media (max-width: 576px) {
+        flex-direction: column;
+      }
+      
+      a {
+        color: $accent-color;
+        text-decoration: none;
+        margin-left: 1.5rem;
+        transition: $transition;
+        
+        @media (max-width: 576px) {
+          margin: 0.5rem 0;
+        }
+        
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+}
+
+// Buttons
+.btn {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  border-radius: 5px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: $transition;
+  
+  &--primary {
+    background-color: $primary-color;
+    color: $secondary-color;
+    border: 2px solid $primary-color;
+    
+    &:hover {
+      background-color: transparent;
+      color: $primary-color;
+    }
+  }
+  
+  &--secondary {
+    background-color: transparent;
+    color: $primary-color;
+    border: 2px solid $primary-color;
+    
+    &:hover {
+      background-color: $primary-color;
+      color: $secondary-color;
+    }
+  }
+  
+  &--white {
+    background-color: $primary-color;
+    color: $secondary-color;
+    border: 2px solid $primary-color;
+    
+    &:hover {
+      background-color: transparent;
+      color: $primary-color;
+    }
+  }
+  
+  &--cta {
+    padding: 0.7rem 1.5rem;
+    border-radius: 0 5px 5px 0;
+    background-color: $primary-color;
+    color: $secondary-color;
+    border: none;
+    font-size: 0.9rem;
+    
+    @media (max-width: 576px) {
+      border-radius: 5px;
+      width: 100%;
+    }
+    
+    &:hover {
+      background-color: ($primary-color, 10%);
+    }
+  }
+}
+
+// Modal
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: $secondary-color;
+  border-radius: 10px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  &__error {
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid rgba(255, 0, 0, 0.3);
+    color: #ff6b6b;
+    padding: 0.8rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  
+  &__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: $primary-color;
+    cursor: pointer;
+    padding: 0.5rem;
+    
+    &:hover {
+      color: $accent-color;
+    }
+  }
+  
+  &__form {
+    &-group {
+      margin-bottom: 1.5rem;
+      
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: $primary-color;
+      }
+      
+      input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.05);
+        color: $primary-color;
+        
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+        }
+      }
+    }
+    
+    button {
+      width: 100%;
+      margin-top: 1rem;
+    }
+  }
+  
+  &__footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: $accent-color;
+    
+    a {
+      color: $primary-color;
+      text-decoration: underline;
+      
+      &:hover {
+        color: $accent-color;
+      }
+    }
+  }
+  
+  &__forgot-password {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    
+    a {
+      color: $accent-color;
+      
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+// Courses Page
+.courses-page {
+  padding: 120px 0 5rem;
+  
+  &__title {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  &__filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    
+    .filter-btn {
+      padding: 0.5rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 25px;
+      background-color: transparent;
+      color: $primary-color;
+      cursor: pointer;
+      transition: $transition;
+      
+      &:hover, &.active {
+        background-color: $primary-color;
+        color: $secondary-color;
+      }
+    }
+  }
+  
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    
+    @media (max-width: 992px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media (max-width: 576px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &__card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.05);
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    
+    &-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    &-content {
+      padding: 1.5rem;
+    }
+    
+    &-category {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      background-color: $primary-color;
+      color: $secondary-color;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    
+    &-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: $primary-color;
+    }
+    
+    &-description {
+      color: $accent-color;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    
+    &-details {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: $accent-color;
+    }
+    
+    &-instructor {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 1rem;
+      }
+      
+      span {
+        font-size: 0.9rem;
+        color: $accent-color;
+      }
+    }
+    
+    &-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 1rem;
+      
+      .price {
+        font-weight: 700;
+        font-size: 1.2rem;
+      }
+      
+      .rating {
+        display: flex;
+        align-items: center;
+        
+        span {
+          margin-left: 0.5rem;
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+.btn--full {
+  width: 100%;
+  text-align: center;
+}
+
+// Subscription Modal
+.subscription-modal {
+  max-width: 400px;
+  
+  .modal__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    
+    h2 {
+      font-size: 1.4rem;
+    }
+    
+    .subscription-icon {
+      color: $primary-color;
+      margin-bottom: 0.8rem;
+    }
+  }
+  
+  .modal__subtitle {
+    text-align: center;
+    color: $accent-color;
+    margin-bottom: 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  .modal__form {
+    .modal__form-group {
+      margin-bottom: 0.8rem;
+      
+      label {
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+      }
+      
+      input {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
+    
+    button {
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+    }
+  }
+  
+  .modal__footer {
+    margin-top: 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+
+.course-card {
+  &__content {
+    padding: 1.5rem;
+  }
+
+  // Add Watch Now button styles
+  .btn--watch-now {
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    i {
+      margin-right: 0.5rem;
+    }
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
