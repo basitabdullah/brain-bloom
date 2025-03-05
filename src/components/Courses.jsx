@@ -111,10 +111,12 @@ const Courses = () => {
                   <span>{course.instructor.name}</span>
                 </div>
                 <div className="courses__card-footer">
-                  <div className="price">{course.price}</div>
                   <div className="rating">
                     ★★★★★
                     <span>{course.rating}</span>
+                  </div>
+                  <div className="watch-now">
+                    <a href="#" className="courses__card-button">Watch Now</a>
                   </div>
                 </div>
               </div>
