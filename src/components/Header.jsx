@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { FaBars, FaCrown } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { FaCrown } from 'react-icons/fa';
 import { GiBrain } from "react-icons/gi";
 
-const Header = ({ onSignupClick, onLoginClick, onPageChange, onSubscriptionClick }) => {
+const Header = ({ onSignupClick, onLoginClick, onSubscriptionClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -19,39 +20,46 @@ const Header = ({ onSignupClick, onLoginClick, onPageChange, onSubscriptionClick
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleSubscriptionClick = () => {
-    // Add subscription handling logic here
-    alert('Subscription options coming soon!');
-  };
-
   return (
     <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container">
-        <a href="#" className="header__logo" onClick={() => onPageChange('home')}>
-          <GiBrain size={32} className="header__logo-icon" />
-          <span>BrainBloom</span>
-        </a>
+        <div className="header__logo">
+          <Link to="/" className="logo">
+            <GiBrain size={32} />
+            <span>BrainBloom</span>
+          </Link>
+        </div>
+        
+        <nav className={`header__nav ${isMobileMenuOpen ? 'open' : ''}`}>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/courses">Courses</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            
+          </ul>
+        </nav>
+        
+        <div className="header__cta">
+          <a href="#" className="btn btn--primary" onClick={(e) => {e.preventDefault(); onSignupClick();}}>Sign Up</a>
+          <a href="#" className="btn btn--secondary subscription-btn" onClick={(e) => {e.preventDefault(); onSubscriptionClick();}}>
+            <FaCrown size={14} /> Subscribe
+          </a>
+        </div>
         
         <button 
-          className="header__mobile-toggle" 
+          className={`header__mobile-toggle ${isMobileMenuOpen ? 'open' : ''}`} 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          <FaBars size={24} />
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
-        
-        <nav className={`header__nav ${isMobileMenuOpen ? 'active' : ''}`}>
-          <ul className="header__menu">
-            <li className="header__menu-item">
-              <a href="#" onClick={() => onPageChange('courses')}>Courses</a>
-            </li>
-          </ul>
-          <div className="header__cta">
-            <a href="#" className="btn btn--primary" onClick={onSignupClick}>Sign Up</a>
-            <a href="#" className="btn btn--secondary subscription-btn" onClick={onSubscriptionClick}>
-              <FaCrown size={14} /> Subscribe
-            </a>
-          </div>
-        </nav>
       </div>
     </header>
   );

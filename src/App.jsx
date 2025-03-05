@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
-import Hero from './components/Hero';
-import Features from './components/Features';
-import Courses from './components/Courses';
-import Testimonials from './components/Testimonials';
-import CTA from './components/CTA';
 import Footer from './components/Footer';
 import SignupModal from './components/SignupModal';
 import LoginModal from './components/LoginModal';
 import SubscriptionModal from './components/SubscriptionModal';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
 import CoursesPage from './pages/CoursesPage';
 import './styles/main.scss';
+import TearmsAndServices from './components/TearmsAndServices';
 
 function App() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSubscriptionOpen, setIsSubscriptionOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState('home');
 
   // Timer to show subscription modal after 10 seconds
   useEffect(() => {
@@ -46,42 +44,42 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <Header 
-        onSignupClick={handleSignup} 
-        onLoginClick={handleLogin}
-        onSubscriptionClick={handleSubscription}
-        onPageChange={setCurrentPage} 
-      />
-      {currentPage === 'home' ? (
+    <Router>
+      <div className="app">
+        <Header 
+          onSignupClick={handleSignup} 
+          onLoginClick={handleLogin}
+          onSubscriptionClick={handleSubscription}
+        />
+        
         <main>
-          <Hero />
-          <Features />
-          <Courses />
-          <Testimonials />
-          <CTA />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/courses" element={<CoursesPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/terms" element={<TearmsAndServices />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
         </main>
-      ) : (
-        <main>
-          <CoursesPage />
-        </main>
-      )}
-      <Footer />
-      <SignupModal 
-        isOpen={isSignupOpen} 
-        onClose={() => setIsSignupOpen(false)} 
-        onLoginClick={handleLogin}
-      />
-      <LoginModal 
-        isOpen={isLoginOpen} 
-        onClose={() => setIsLoginOpen(false)} 
-        onSignupClick={handleSignup}
-      />
-      <SubscriptionModal
-        isOpen={isSubscriptionOpen}
-        onClose={() => setIsSubscriptionOpen(false)}
-      />
-    </div>
+        
+        <Footer />
+        
+        <SignupModal 
+          isOpen={isSignupOpen} 
+          onClose={() => setIsSignupOpen(false)} 
+          onLoginClick={handleLogin}
+        />
+        <LoginModal 
+          isOpen={isLoginOpen} 
+          onClose={() => setIsLoginOpen(false)} 
+          onSignupClick={handleSignup}
+        />
+        <SubscriptionModal
+          isOpen={isSubscriptionOpen}
+          onClose={() => setIsSubscriptionOpen(false)}
+        />
+      </div>
+    </Router>
   );
 }
 
