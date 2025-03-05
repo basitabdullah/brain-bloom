@@ -31,17 +31,11 @@ const Header = ({ onSignupClick, onLoginClick, onSubscriptionClick }) => {
         </div>
         
         <nav className={`header__nav ${isMobileMenuOpen ? 'open' : ''}`}>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/courses">Courses</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            
+          <ul className="nav-links">
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/courses">Courses</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
           </ul>
         </nav>
         

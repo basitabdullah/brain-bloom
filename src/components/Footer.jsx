@@ -35,7 +35,7 @@ const Footer = () => {
           <div className="footer__links">
             <h3>Resources</h3>
             <ul>
-              <li><Link to="/terms">FAQ</Link></li>
+              <li><Link to="/faq">FAQ</Link></li>
               <li><Link to="/contact">Support</Link></li>
               <li><Link to="/terms">Terms of Service</Link></li>
             </ul>

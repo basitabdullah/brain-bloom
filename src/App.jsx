@@ -8,6 +8,8 @@ import SubscriptionModal from './components/SubscriptionModal';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import CoursesPage from './pages/CoursesPage';
+import ContactPage from './pages/ContactPage';
+import FAQPage from './pages/FAQPage';
 import './styles/main.scss';
 import TearmsAndServices from './components/TearmsAndServices';
 
@@ -57,6 +59,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/courses" element={<CoursesPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/faq" element={<FAQPage />} />
             <Route path="/terms" element={<TearmsAndServices />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
