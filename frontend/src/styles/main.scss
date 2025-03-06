@@ -149,7 +149,7 @@ p {
         border: none;
         
         &:hover {
-          background-color: darken($accent-color, 10%);
+          background-color: ($accent-color, 10%);
         }
       }
       
@@ -779,9 +779,14 @@ p {
   border-radius: 10px;
   padding: 2rem;
   width: 90%;
-  max-width: 500px;
+  max-width: 600px;
   position: relative;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: auto;
+  height: 70vh;
+  &::-webkit-scrollbar{
+    display: none;
+  }
   
   h2 {
     text-align: center;
@@ -1478,7 +1483,7 @@ p {
         border: none;
         
         &:hover {
-          background-color: darken($accent-color, 10%);
+          background-color: ($accent-color, 10%);
           transform: translateY(-2px);
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
