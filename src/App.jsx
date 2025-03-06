@@ -10,6 +10,7 @@ import AboutPage from './pages/AboutPage';
 import CoursesPage from './pages/CoursesPage';
 import ContactPage from './pages/ContactPage';
 import FAQPage from './pages/FAQPage';
+import VideoPlayerPage from './pages/VideoPlayerPage';
 import './styles/main.scss';
 import TearmsAndServices from './components/TearmsAndServices';
 
@@ -62,6 +63,7 @@ function App() {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/terms" element={<TearmsAndServices />} />
+            <Route path="/watch/:courseId" element={<VideoPlayerPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
