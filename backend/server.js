@@ -9,7 +9,7 @@ dotenv.config();
 app.get("/abyss-list", async (req, res) => {
   try {
     const response = await axios.get(
-      "https://api.hydrax.net/46743d9a9db51f4fa4cc2cc28fea0795/list"
+      "https://api.hydrax.net/07a8dfa8fce3b110fc94797e345f83a6/list"
     );
     res.json(response.data);
     

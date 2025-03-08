@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import {Link} from "react-router-dom"
 
 const Courses = () => {
   const courses = [
@@ -116,7 +117,7 @@ const Courses = () => {
                     <span>{course.rating}</span>
                   </div>
                   <div className="watch-now">
-                    <a href="#" className="courses__card-button">Watch Now</a>
+                    <Link to={"/watch/454634"} className="courses__card-button">Watch Now</Link>
                   </div>
                 </div>
               </div>
@@ -124,7 +125,7 @@ const Courses = () => {
           ))}
         </div>
         <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-          <a href="#" className="btn btn--primary">View All Courses</a>
+          <Link to={"/courses"} className="btn btn--primary">View All Courses</Link>
         </div>
       </div>
     </section>

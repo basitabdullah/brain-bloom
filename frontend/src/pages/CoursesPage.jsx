@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
+import {Link} from "react-router-dom"
 
 const CoursesPage = () => {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -156,7 +157,7 @@ const CoursesPage = () => {
                   </div>
                 </div>
                 
-                <a href="#" className="btn btn--primary btn--full">Watch Now</a>
+                <Link to={"/watch/8934317"} className="btn btn--primary btn--full">Watch Now</Link>
               </div>
             </div>
           ))}
