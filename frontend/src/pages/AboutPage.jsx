@@ -119,7 +119,7 @@ const AboutPage = () => {
         <div className="container">
           <h2>Ready to Start Learning?</h2>
           <p>Join thousands of students already learning on BrainBloom</p>
-          <a href="#" className="btn btn--primary">Explore Courses</a>
+          <a href="/courses" className="btn btn--primary">Explore Courses</a>
         </div>
       </section>
     </div>
