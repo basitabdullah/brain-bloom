@@ -21,7 +21,9 @@ app.get("/abyss-list", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch data" });
   }
 });
-
+app.get("/", async (req, res) => {
+  res.send("Backend is Running!")
+});
 connectDb();
 
 // app.listen(process.env.PORT, () => {
