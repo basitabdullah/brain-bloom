@@ -1,3 +1,4 @@
+
 // Variables
 $primary-color: #fff;
 $secondary-color: #000;
@@ -102,6 +103,10 @@ p {
       svg {
         margin-right: 0.5rem;
         color: white; // White color for logo icon
+        transition: 0.45s ease;
+        &:hover{
+          transform: rotate(20deg);
+        }
       }
     }
   }
@@ -265,6 +270,7 @@ p {
   }
   &__buttons{
     display: flex;
+    margin-top: 20px;
     gap: 1rem;
     @media (max-width: 768px) {
       flex-direction: column;
@@ -296,7 +302,7 @@ p {
     
     img {
       width: 100%;
-      height: auto;
+      height: 400px;
       border-radius: 10px;
       box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
     }
@@ -309,6 +315,7 @@ p {
   color: $primary-color;
   
   &__grid {
+    margin-top: 30px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;

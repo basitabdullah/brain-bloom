@@ -4,8 +4,6 @@ import Features from '../components/Features';
 import Courses from '../components/Courses';
 import Testimonials from '../components/Testimonials';
 import CTA from '../components/CTA';
-import ScrollToTop from '../components/ScrollToTop';
-
 const HomePage = () => {
   return (
     <>

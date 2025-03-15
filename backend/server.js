@@ -7,8 +7,9 @@ import userRoutes from "./routes/userRoutes.js";
 
 const app = express();
 app.use(cors());
+app.use(express.json())
 dotenv.config();
-app.use("/api/auth",userRoutes)
+app.use("/api/auth", userRoutes);
 
 app.get("/abyss-list", async (req, res) => {
   try {
@@ -21,11 +22,11 @@ app.get("/abyss-list", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch data" });
   }
 });
-app.get("/", async (req, res) => {
-  res.send("Backend is Running!")
+app.get("/", (req, res) => {
+  res.send("Backend is Running!");
 });
-connectDb();
 
-// app.listen(process.env.PORT, () => {
-//   console.log(`Listening on port ${process.env.PORT}`);
-// });
+app.listen(process.env.PORT, () => {
+  connectDb();
+  console.log(`Listening on port ${process.env.PORT}`);
+});

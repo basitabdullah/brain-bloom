@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCrown } from 'react-icons/fa';
 import { GiBrain } from "react-icons/gi";
+import ShinyText from "../../animatedTexts/ShinyText/ShinyText"
 
 const Header = ({ onSignupClick, onLoginClick, onSubscriptionClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,7 +43,8 @@ const Header = ({ onSignupClick, onLoginClick, onSubscriptionClick }) => {
         <div className="header__cta">
           <a href="#" className="btn btn--primary" onClick={(e) => {e.preventDefault(); onSignupClick();}}>Sign Up</a>
           <a href="#" className="btn btn--secondary subscription-btn" onClick={(e) => {e.preventDefault(); onSubscriptionClick();}}>
-            <FaCrown size={14} /> Subscribe
+            <ShinyText text={<FaCrown size={14} /> } disabled={false} speed={3} className='custom-class' />
+            <ShinyText text="Subscribe" disabled={false} speed={3} className='custom-class' />
           </a>
         </div>
         

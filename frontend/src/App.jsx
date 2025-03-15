@@ -1,33 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import SignupModal from './components/SignupModal';
-import LoginModal from './components/LoginModal';
-import SubscriptionModal from './components/SubscriptionModal';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import CoursesPage from './pages/CoursesPage';
-import ContactPage from './pages/ContactPage';
-import FAQPage from './pages/FAQPage';
-import VideoPlayerPage from './pages/VideoPlayerPage';
-import './styles/main.scss';
-import TearmsAndServices from './components/TearmsAndServices';
-import ScrollToTop from './components/ScrollToTop';
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import SignupModal from "./components/SignupModal";
+import LoginModal from "./components/LoginModal";
+import SubscriptionModal from "./components/SubscriptionModal";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import CoursesPage from "./pages/CoursesPage";
+import ContactPage from "./pages/ContactPage";
+import FAQPage from "./pages/FAQPage";
+import VideoPlayerPage from "./pages/VideoPlayerPage";
+import "./styles/main.scss";
+import "./app.css";
+import TearmsAndServices from "./components/TearmsAndServices";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSubscriptionOpen, setIsSubscriptionOpen] = useState(false);
 
-  // Timer to show subscription modal after 10 seconds
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsSubscriptionOpen(true);
-    }, 10000); // 10 seconds
-
-    return () => clearTimeout(timer);
-  }, []);
+  setTimeout(() => {
+    setIsSubscriptionOpen(true);
+  }, [50000]);
 
   const handleSignup = () => {
     setIsLoginOpen(false);
