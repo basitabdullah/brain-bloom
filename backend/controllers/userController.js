@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 const generateJwtToken = async (userId) => {
   try {
-    const token = jwt.sign({ userId }, "vjdvjbsdv", {
+    const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
     return token;
@@ -13,19 +13,24 @@ const generateJwtToken = async (userId) => {
   }
 };
 const setCookies = async (res, token) => {
-  try {
-    res.cookie("jwtAccessToken", token, {
-      httpOnly: true,
-      secure: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
-      sameSite: "None",
-    });
-  } catch (error) {}
+  return new Promise((resolve, reject) => {
+    try {
+      res.cookie("jwtAccessToken", token, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+        sameSite: "None",
+      });
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 
-export const login = async (req,res) => {
+export const login = async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({email});
+  const user = await User.findOne({ email });
   if (!user) {
     return res.status(401).json({
       message: "User not found!",
@@ -40,12 +45,13 @@ export const login = async (req,res) => {
   }
   //generate token
   const token = await generateJwtToken(user._id);
+
   //set cookie
-  setCookies(res, token);
+  await setCookies(res, token);
 
   res.status(201).json({
-    message: "User logged in successfully!",
     user,
+    message: "User logged in successfully!",
   });
 };
 
@@ -54,7 +60,7 @@ export const register = async (req, res) => {
   try {
     let user = await User.findOne({ email });
     if (user) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "User already exists!",
       });
     }
@@ -75,7 +81,7 @@ export const register = async (req, res) => {
     //   sameSite: "None",
     // });
     //instaed of this you can make a function
-    setCookies(res, token);
+    await setCookies(res, token);
     res.status(200).json({
       message: "User Created Successfully!",
       user,
@@ -90,7 +96,7 @@ export const logout = async (req, res) => {
   try {
     res.clearCookie("jwtAccessToken", {
       httpOnly: true,
-      secure: true, 
+      secure: true,
       sameSite: "None",
     });
     res.status(200).json({
@@ -107,6 +113,22 @@ export const allUsers = async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
+export const getProfile = async (req, res) => {
+  try {
+    const user = req.user;
+    if (!user) {
+      res.status(401).json({
+        message: "User Not Found!",
+      });
+    }
+    res.status(200).json(user);
   } catch (error) {
     res.status(400).json({
       message: error.message,

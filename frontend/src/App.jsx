@@ -20,15 +20,13 @@ import "./styles/main.scss";
 import "./app.css";
 import TearmsAndServices from "./components/TearmsAndServices";
 import ScrollToTop from "./components/ScrollToTop";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSubscriptionOpen, setIsSubscriptionOpen] = useState(false);
 
-  setTimeout(() => {
-    setIsSubscriptionOpen(true);
-  }, [50000]);
 
   const handleSignup = () => {
     setIsLoginOpen(false);
@@ -59,6 +57,7 @@ function App() {
 
         <main>
           <ScrollToTop>
+            <Toaster position="bottom-right" reverseOrder={false} />
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/courses" element={<CoursesPage />} />

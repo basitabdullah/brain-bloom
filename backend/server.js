@@ -4,11 +4,23 @@ import dotenv from "dotenv";
 import axios from "axios";
 import { connectDb } from "./libs/connectDb.js";
 import userRoutes from "./routes/userRoutes.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
-app.use(cors());
+
 app.use(express.json())
 dotenv.config();
+
+
+
+const corsOptions = {
+  origin: process.env.CLIENT_URL, // Allow requests from the React app
+  methods: "GET,POST,PUT,DELETE,PATCH", // Allow these HTTP methods
+  credentials: true, // Enable credentials (cookies, auth headers)
+};
+app.use(cors(corsOptions));
+app.use(cookieParser())
+
 app.use("/api/auth", userRoutes);
 
 app.get("/abyss-list", async (req, res) => {
