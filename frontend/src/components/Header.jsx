@@ -56,9 +56,9 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
 
         <div className="header__cta">
           {user ? (
-            <button onClick={() => logout()} className="btn btn--primary">
+            <a onClick={() => logout()} className="btn btn--primary">
               Logout
-            </button>
+            </a>
           ) : (
             <a
               href="#"

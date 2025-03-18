@@ -8,18 +8,16 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-app.use(express.json())
+app.use(express.json());
 dotenv.config();
 
-
-
 const corsOptions = {
-  origin: ["https://www.brainbloom.sbs"], // Allow requests from the React app
+  origin: ["https://www.brainbloom.sbs", "http://localhost:5173"], // Allow requests from the React app
   methods: "GET,POST,PUT,DELETE,PATCH", // Allow these HTTP methods
   credentials: true, // Enable credentials (cookies, auth headers)
 };
 app.use(cors(corsOptions));
-app.use(cookieParser())
+app.use(cookieParser());
 
 app.use("/api/auth", userRoutes);
 
