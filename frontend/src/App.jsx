@@ -17,7 +17,6 @@ import ContactPage from "./pages/ContactPage";
 import FAQPage from "./pages/FAQPage";
 import VideoPlayerPage from "./pages/VideoPlayerPage";
 import "./styles/main.scss";
-import "./app.css";
 import TearmsAndServices from "./components/TearmsAndServices";
 import ScrollToTop from "./components/ScrollToTop";
 import { Toaster } from "react-hot-toast";
