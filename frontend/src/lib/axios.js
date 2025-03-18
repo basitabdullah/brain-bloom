@@ -2,7 +2,7 @@ import axios from "axios"
 
 
 const axiosInstance = axios.create({
-    baseURL : import.meta.env.VITE_REACT_APP_BACKEND_URL,
+    baseURL : "https://brain-bloom-backned.vercel.app/api",
     withCredentials: true,
     headers: {
         "Content-Type": "application/json"
