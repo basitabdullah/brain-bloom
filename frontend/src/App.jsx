@@ -21,12 +21,13 @@ import "./app.css";
 import TearmsAndServices from "./components/TearmsAndServices";
 import ScrollToTop from "./components/ScrollToTop";
 import { Toaster } from "react-hot-toast";
+import { useUserStore } from "./stores/useUserStore";
 
 function App() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSubscriptionOpen, setIsSubscriptionOpen] = useState(false);
-
+  const { user } = useUserStore();
 
   const handleSignup = () => {
     setIsLoginOpen(false);
@@ -65,7 +66,17 @@ function App() {
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/terms" element={<TearmsAndServices />} />
-              <Route path="/watch/:courseId" element={<VideoPlayerPage />} />
+              <Route
+                path="/watch/:courseId"
+                element={
+                  (user && user?.role === "subscriber") ||
+                  user?.role === "admin" ? (
+                    <VideoPlayerPage />
+                  ) : (
+                    <Navigate to="/" />
+                  )
+                }
+              />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </ScrollToTop>

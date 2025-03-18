@@ -20,6 +20,15 @@ export const useUserStore = create((set, get) => ({
       errorToast(error.response.data.message);
     }
   },
+  register: async ({name,email,password,phone}) => {
+    try {
+      const res = await axios.post("auth/register");
+      set({ user: res.data.user });
+      successToast(res.data.message);
+    } catch (error) {
+      errorToast(error.response.data.message);
+    }
+  },
   logout: async () => {
     try {
       const res = await axios.post("auth/logout");

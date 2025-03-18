@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs"
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     default: "user",
+    enum: ["user", "subscriber", "admin"],
     required: true,
   },
 });
@@ -32,7 +33,6 @@ export const hashPassword = async (password) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
   return hashedPassword;
-  
 };
 const User = mongoose.model("User", userSchema);
 
