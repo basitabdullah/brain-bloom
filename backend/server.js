@@ -14,7 +14,7 @@ dotenv.config();
 
 
 const corsOptions = {
-  origin: ["https://www.brainbloom.sbs", "http://localhost:5000"], // Allow requests from the React app
+  origin: ["*"], // Allow requests from the React app
   methods: "GET,POST,PUT,DELETE,PATCH", // Allow these HTTP methods
   credentials: true, // Enable credentials (cookies, auth headers)
 };
