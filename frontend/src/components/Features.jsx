@@ -7,7 +7,8 @@ import {
   FaCertificate,
   FaUsers,
 } from "react-icons/fa";
-import TrueFocus from "../../animatedTexts/SplitText/TrueFocus.jsx";
+import  TrueFocus from "../../animatedTexts/TrueFocus/TrueFocus"
+
 
 const Features = () => {
   const features = [
@@ -52,15 +53,16 @@ const Features = () => {
   return (
     <section id="features" className="features section">
       <div className="container">
-        {/* <h2 className="section-title">Why Choose BrainBloom</h2> */}
-        <TrueFocus
-          sentence="Why Choose BrainBloom"
-          manualMode={false}
-          blurAmount={5}
-          borderColor="gray"
-          animationDuration={2}
-          pauseBetweenAnimations={1}
-        />
+        <h2 className="section-title">
+          <TrueFocus
+            sentence="Why Choose BrainBloom"
+            manualMode={false}
+            blurAmount={5}
+            borderColor="gray"
+            animationDuration={2}
+            pauseBetweenAnimations={1}
+          />
+        </h2>
         <div className="features__grid">
           {features.map((feature, index) => (
             <div key={index} className="features__item">

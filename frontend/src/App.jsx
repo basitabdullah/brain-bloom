@@ -27,6 +27,7 @@ function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSubscriptionOpen, setIsSubscriptionOpen] = useState(false);
   const { user } = useUserStore();
+  console.log(user);
 
   const handleSignup = () => {
     setIsLoginOpen(false);
@@ -68,8 +69,7 @@ function App() {
               <Route
                 path="/watch/:courseId"
                 element={
-                  (user && user?.role === "subscriber") ||
-                  user?.role === "admin" ? (
+                  user && (user.role === "admin" || user.role === "subscriber") ? (
                     <VideoPlayerPage />
                   ) : (
                     <Navigate to="/" />
