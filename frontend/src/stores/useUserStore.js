@@ -20,7 +20,7 @@ export const useUserStore = create((set, get) => ({
       errorToast(error.response.data.message);
     }
   },
-  register: async ({name,email,password,phone}) => {
+  register: async ({ name, email, password, phone }) => {
     try {
       const res = await axios.post("auth/register");
       set({ user: res.data.user });
@@ -43,7 +43,8 @@ export const useUserStore = create((set, get) => ({
     set({ checkingAuth: true });
     try {
       const res = await axios.get("auth/profile");
-      set({ checkingAuth: false, user: res.data });
+      set({ checkingAuth: false, user: res.data[0] });
+
       successToast("Logged In Automatically!");
     } catch (error) {
       set({ checkingAuth: false });
