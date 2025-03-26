@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
-import { FaBook, FaUsers, FaMoneyBillWave, FaPlus } from 'react-icons/fa';
+import React from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import { FaBook, FaUsers, FaMoneyBillWave, FaPlus } from "react-icons/fa";
 
 const AdminLayout = () => {
   const location = useLocation();
@@ -16,27 +16,35 @@ const AdminLayout = () => {
           <h2>Admin Panel</h2>
         </div>
         <nav className="admin-layout__nav">
-          <Link 
-            to="/admin/courses" 
-            className={`admin-layout__nav-item ${isActive('/admin/courses') ? 'active' : ''}`}
+          <Link
+            to="/admin/courses"
+            className={`admin-layout__nav-item ${
+              isActive("/admin/courses") ? "active" : ""
+            }`}
           >
             <FaBook /> All Courses
           </Link>
-          <Link 
-            to="/admin/add-course" 
-            className={`admin-layout__nav-item ${isActive('/admin/add-course') ? 'active' : ''}`}
+          <Link
+            to="/admin/add-course"
+            className={`admin-layout__nav-item ${
+              isActive("/admin/add-course") ? "active" : ""
+            }`}
           >
             <FaPlus /> Add Course
           </Link>
-          <Link 
-            to="/admin/users" 
-            className={`admin-layout__nav-item ${isActive('/admin/users') ? 'active' : ''}`}
+          <Link
+            to="/admin/users"
+            className={`admin-layout__nav-item ${
+              isActive("/admin/users") ? "active" : ""
+            }`}
           >
             <FaUsers /> Users
           </Link>
-          <Link 
-            to="/admin/payments" 
-            className={`admin-layout__nav-item ${isActive('/admin/payments') ? 'active' : ''}`}
+          <Link
+            to="/admin/payments"
+            className={`admin-layout__nav-item ${
+              isActive("/admin/payments") ? "active" : ""
+            }`}
           >
             <FaMoneyBillWave /> Payments
           </Link>
@@ -49,4 +57,4 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout; 
+export default AdminLayout;

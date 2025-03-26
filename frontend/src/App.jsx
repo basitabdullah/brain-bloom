@@ -22,7 +22,7 @@ import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
 import AdminLayout from './components/AdminLayout';
 import CoursesList from './pages/admin/CoursesList';
-import AdminPanel from './pages/AdminPanel';
+import AddCourse from './pages/admin/AddCourse';
 import UsersManagement from './pages/admin/UsersManagement';
 import Payments from './pages/admin/Payments';
 import AppLayout from './components/AppLayout';
@@ -83,7 +83,7 @@ function App() {
               <Route path="/admin" element={<AdminLayout />}>
                 <Route index element={<Navigate to="/admin/courses" replace />} />
                 <Route path="courses" element={<CoursesList />} />
-                <Route path="add-course" element={<AdminPanel />} />
+                <Route path="add-course" element={<AddCourse />} />
                 <Route path="users" element={<UsersManagement />} />
                 <Route path="payments" element={<Payments />} />
               </Route>
