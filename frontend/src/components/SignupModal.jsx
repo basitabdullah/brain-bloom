@@ -5,7 +5,7 @@ import { useUserStore } from "../stores/useUserStore";
 const SignupModal = ({ isOpen, onClose, onLoginClick }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState(0);
+  const [phone, setPhone] = useState();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -21,9 +21,9 @@ const SignupModal = ({ isOpen, onClose, onLoginClick }) => {
       return;
     }
 
-    console.log("Signup attempted with:", { name, email });
+    console.log("Signup attempted with:", { name, email,phone,password });
 
-    register(name,email,password,phone)
+    register({name,email,password,phone})
 
     setName("");
     setEmail("");

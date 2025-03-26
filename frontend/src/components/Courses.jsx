@@ -14,7 +14,6 @@ const Courses = () => {
         name: "John Smith",
         avatar: "https://randomuser.me/api/portraits/men/1.jpg",
       },
-      price: "$49.99",
       rating: 4.8,
     },
     {
@@ -27,7 +26,6 @@ const Courses = () => {
         name: "Sarah Johnson",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
       },
-      price: "$59.99",
       rating: 4.9,
     },
     {
@@ -40,7 +38,6 @@ const Courses = () => {
         name: "Michael Brown",
         avatar: "https://randomuser.me/api/portraits/men/2.jpg",
       },
-      price: "$39.99",
       rating: 4.7,
     },
     {
@@ -53,7 +50,6 @@ const Courses = () => {
         name: "Emily Davis",
         avatar: "https://randomuser.me/api/portraits/women/2.jpg",
       },
-      price: "$49.99",
       rating: 4.6,
     },
     {
@@ -66,7 +62,6 @@ const Courses = () => {
         name: "David Wilson",
         avatar: "https://randomuser.me/api/portraits/men/3.jpg",
       },
-      price: "$69.99",
       rating: 4.9,
     },
     {
@@ -79,7 +74,6 @@ const Courses = () => {
         name: "Jessica Taylor",
         avatar: "https://randomuser.me/api/portraits/women/3.jpg",
       },
-      price: "$54.99",
       rating: 4.8,
     },
   ];

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,7 +6,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 import SignupModal from "./components/SignupModal";
 import LoginModal from "./components/LoginModal";
 import SubscriptionModal from "./components/SubscriptionModal";
@@ -21,13 +20,18 @@ import TearmsAndServices from "./components/TearmsAndServices";
 import ScrollToTop from "./components/ScrollToTop";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
+import AdminLayout from './components/AdminLayout';
+import CoursesList from './pages/admin/CoursesList';
+import AdminPanel from './pages/AdminPanel';
+import UsersManagement from './pages/admin/UsersManagement';
+import Payments from './pages/admin/Payments';
+import AppLayout from './components/AppLayout';
 
 function App() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSubscriptionOpen, setIsSubscriptionOpen] = useState(false);
   const { user } = useUserStore();
-  console.log(user);
 
   const handleSignup = () => {
     setIsLoginOpen(false);
@@ -49,7 +53,7 @@ function App() {
 
   return (
     <Router>
-      <div className="app">
+      <AppLayout>
         <Header
           onSignupClick={handleSignup}
           onLoginClick={handleLogin}
@@ -76,12 +80,17 @@ function App() {
                   )
                 }
               />
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<Navigate to="/admin/courses" replace />} />
+                <Route path="courses" element={<CoursesList />} />
+                <Route path="add-course" element={<AdminPanel />} />
+                <Route path="users" element={<UsersManagement />} />
+                <Route path="payments" element={<Payments />} />
+              </Route>
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </ScrollToTop>
         </main>
-
-        <Footer />
 
         <SignupModal
           isOpen={isSignupOpen}
@@ -97,7 +106,7 @@ function App() {
           isOpen={isSubscriptionOpen}
           onClose={() => setIsSubscriptionOpen(false)}
         />
-      </div>
+      </AppLayout>
     </Router>
   );
 }
