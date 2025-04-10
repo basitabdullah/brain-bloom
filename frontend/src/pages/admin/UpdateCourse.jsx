@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import { useCourseStore } from "../../stores/useCourseStore";
+import { useParams } from "react-router-dom";
 
-function AddCourse() {
+function UpdateCourse() {
   const [courseData, setCourseData] = useState({
     title: "",
     category: "",
@@ -22,7 +23,10 @@ function AddCourse() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
-  const { createCourse } = useCourseStore();
+  const { updateCourse } = useCourseStore();
+  const { id } = useParams();
+  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name.includes(".")) {
@@ -65,20 +69,19 @@ function AddCourse() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setMessage({ type: "", text: "" });
-    createCourse({courseData})
+    updateCourse({ courseData, id });
     setIsSubmitting(false);
-
   };
 
   return (
     <div className="admin-panel">
       <div className="admin-panel__header">
-        <h1>Add New Course</h1>
-        <p>Fill in the details to create a new course</p>
+        <h1>Update Course</h1>
+        <p>Update the details of the course</p>
       </div>
 
       {message.text && (
@@ -99,7 +102,6 @@ function AddCourse() {
                 name="title"
                 value={courseData.title}
                 onChange={handleInputChange}
-                required
               />
             </div>
             <div className="form-group">
@@ -110,7 +112,6 @@ function AddCourse() {
                 name="category"
                 value={courseData.category}
                 onChange={handleInputChange}
-                required
               />
             </div>
           </div>
@@ -122,7 +123,6 @@ function AddCourse() {
               name="description"
               value={courseData.description}
               onChange={handleInputChange}
-              required
             />
           </div>
 
@@ -135,7 +135,6 @@ function AddCourse() {
                 name="duration"
                 value={courseData.duration}
                 onChange={handleInputChange}
-                required
               />
             </div>
             <div className="form-group">
@@ -145,7 +144,6 @@ function AddCourse() {
                 name="level"
                 value={courseData.level}
                 onChange={handleInputChange}
-                required
               >
                 <option value="beginner">Beginner</option>
                 <option value="intermediate">Intermediate</option>
@@ -166,7 +164,6 @@ function AddCourse() {
                 name="instructor.name"
                 value={courseData.instructor.name}
                 onChange={handleInputChange}
-                required
               />
             </div>
             <div className="form-group">
@@ -177,7 +174,6 @@ function AddCourse() {
                 name="instructor.image"
                 value={courseData.instructor.image}
                 onChange={handleInputChange}
-                required
               />
             </div>
           </div>
@@ -193,7 +189,6 @@ function AddCourse() {
               name="image"
               value={courseData.image}
               onChange={handleInputChange}
-              required
             />
           </div>
           <div className="form-group">
@@ -204,7 +199,6 @@ function AddCourse() {
               name="youtubeLink"
               value={courseData.youtubeLink}
               onChange={handleInputChange}
-              required
             />
           </div>
         </div>
@@ -227,7 +221,6 @@ function AddCourse() {
                 value={link}
                 onChange={(e) => handleAbyssLinkChange(index, e.target.value)}
                 placeholder={`Abyss Link ${index + 1}`}
-                required
               />
               <button
                 type="button"
@@ -254,7 +247,6 @@ function AddCourse() {
                 step="0.1"
                 value={courseData.rating}
                 onChange={handleInputChange}
-                required
               />
             </div>
             <div className="form-group">
@@ -266,7 +258,6 @@ function AddCourse() {
                 min="0"
                 value={courseData.reviews}
                 onChange={handleInputChange}
-                required
               />
             </div>
           </div>
@@ -281,10 +272,10 @@ function AddCourse() {
             {isSubmitting ? (
               <>
                 <span className="spinner"></span>
-                Adding Course...
+                Updating Course...
               </>
             ) : (
-              "Add Course"
+              "Update Course"
             )}
           </button>
         </div>
@@ -293,4 +284,4 @@ function AddCourse() {
   );
 }
 
-export default AddCourse;
+export default UpdateCourse;

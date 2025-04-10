@@ -29,6 +29,11 @@ export const createCourse = async (req, res) => {
       youtubeLink,
       abyssLinks,
     });
+    if (abyssLinks.length === 0) {
+      return res.status(400).json({
+        message: "Add at least one abyss link!",
+      });
+    }
 
     res.status(200).json({
       message: "Added Course Successfully!",
@@ -84,6 +89,7 @@ export const updateCourse = async (req, res) => {
     youtubeLink,
     abyssLinks,
   } = req.body;
+  console.log(req.body);
   try {
     const course = await Course.findById(id);
 
@@ -95,13 +101,20 @@ export const updateCourse = async (req, res) => {
     course.description = description || course.description;
     course.duration = duration || course.duration;
     course.level = level || course.level;
-    course.instructor = instructor || course.instructor;
     course.image = image || course.image;
     course.rating = rating || course.rating;
     course.reviews = reviews || course.reviews;
     course.youtubeLink = youtubeLink || course.youtubeLink;
     course.abyssLinks = abyssLinks || course.abyssLinks;
 
+    if (instructor) {
+      if (instructor.name) {
+        course.instructor.name = instructor.name;
+      }
+      if (instructor.image) {
+        course.instructor.image = instructor.image;
+      }
+    }
     await course.save();
 
     res.status(201).json({

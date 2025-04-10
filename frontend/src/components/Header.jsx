@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { FaCrown } from "react-icons/fa";
 import { GiBrain } from "react-icons/gi";
 import ShinyText from "../../animatedTexts/ShinyText/ShinyText";
@@ -51,6 +51,11 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
             <li>
               <Link to="/contact">Contact</Link>
             </li>
+            {user?.role === "admin" && (
+              <li>
+                <Link to="/admin">Admin</Link>
+              </li>
+            )}
           </ul>
         </nav>
 

@@ -26,6 +26,7 @@ import AddCourse from './pages/admin/AddCourse';
 import UsersManagement from './pages/admin/UsersManagement';
 import Payments from './pages/admin/Payments';
 import AppLayout from './components/AppLayout';
+import UpdateCourse from "./pages/admin/UpdateCourse";
 
 function App() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -80,10 +81,17 @@ function App() {
                   )
                 }
               />
-              <Route path="/admin" element={<AdminLayout />}>
+              <Route path="/admin" element={
+                  user && (user.role === "admin" || user.role === "subscriber") ? (
+                    <AdminLayout />
+                  ) : (
+                    <Navigate to="/" />
+                  )
+                }>
                 <Route index element={<Navigate to="/admin/courses" replace />} />
                 <Route path="courses" element={<CoursesList />} />
                 <Route path="add-course" element={<AddCourse />} />
+                <Route path="update-course/:id" element={<UpdateCourse />} />
                 <Route path="users" element={<UsersManagement />} />
                 <Route path="payments" element={<Payments />} />
               </Route>

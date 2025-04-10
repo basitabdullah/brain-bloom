@@ -6,7 +6,7 @@ const LoginModal = ({ isOpen, onClose, onSignupClick }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login, loading } = useUserStore();
+  const { login } = useUserStore();
 
   const handleSubmit = (e) => {
     e.preventDefault();
