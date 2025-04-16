@@ -4,6 +4,7 @@ import { successToast, errorToast } from "../lib/toast";
 
 export const useCourseStore = create((set, get) => ({
   courses: null,
+  singleCourse: null,
   loading: false,
 
   createCourse: async ({ courseData }) => {
@@ -27,6 +28,29 @@ export const useCourseStore = create((set, get) => ({
       set({ loading: false });
     }
   },
+  getAllCourses: async () => {
+    set({ loading: true });
+    try {
+      const res = await axios.get("/course");
+
+      set({ courses: res.data.courses });
+      set({ loading: false });
+    } catch (error) {
+      errorToast(error.response.data.message);
+      set({ loading: false });
+    }
+  },
+  getSingleCourse: async (id) => {
+    set({ loading: true });
+    try {
+      const res = await axios.get(`/course/${id}`);
+      set({ singleCourse: res.data.course });
+      set({ loading: false });
+    } catch (error) {
+      errorToast(error.response.data.message);
+      set({ loading: false });
+    }
+  },
 
   deleteCourse: async (id) => {
     set({ loading: true });
@@ -43,7 +67,7 @@ export const useCourseStore = create((set, get) => ({
   updateCourse: async ({ courseData, id }) => {
     set({ loading: true });
 
-    try { 
+    try {
       const res = await axios.put(`/course/${id}`, courseData);
       successToast(res.data.message);
       set({ loading: false });

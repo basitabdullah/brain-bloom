@@ -12,70 +12,22 @@ import {
   FaShare,
 } from "react-icons/fa";
 import axios from "axios";
+import { useCourseStore } from "../stores/useCourseStore";
 
 const VideoPlayerPage = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
-  const [course, setCourse] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [premiumVideos, setPremiumVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [AbyssCourse, setAbyssCourse] = useState();
 
-  const fetchAbyssData = async () => {
-    const res = await axios.get("http://localhost:5000/abyss-list");
-    console.log(res.data);
-
-    setAbyssCourse(res.data);
-  };
+  const { getSingleCourse, singleCourse, loading } = useCourseStore();
 
   useEffect(() => {
-    fetchAbyssData();
+    getSingleCourse(courseId);
   }, []);
 
-
-  useEffect(() => {
-    // Mock data for premium videos
-    console.log("selected", selectedVideo);
-    
-    const fetchCourse = async () => {
-      setIsLoading(true);
-      try {
-        // Simulate API call
-        setTimeout(() => {
-          // Mock data
-          setCourse({
-            id: courseId,
-            title: "Advanced Web Development",
-            description:
-              "Learn the latest techniques in web development with this comprehensive course. Master HTML, CSS, JavaScript, and responsive design principles to build modern, interactive websites.",
-            instructor: {
-              name: "Jane Smith",
-              avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-            },
-          });
-          
-          // Only set premium videos if AbyssCourse exists and has items
-          if (AbyssCourse && AbyssCourse.items) {
-            setPremiumVideos(AbyssCourse.items);
-            setSelectedVideo(AbyssCourse.items[0]);
-          }
-          
-          setIsLoading(false);
-        }, 1000);
-      } catch (error) {
-        console.error("Error fetching course:", error);
-        setIsLoading(false);
-      }
-    };
-
-    // Only fetch course data if AbyssCourse is available
-    if (AbyssCourse) {
-      fetchCourse();
-    }
-  }, [courseId, AbyssCourse]); // Add AbyssCourse as a dependency
+  console.log("singlecourse", singleCourse);
 
   const toggleFullscreen = () => {
     const videoContainer = document.querySelector(".video-player__container");
@@ -105,15 +57,11 @@ const VideoPlayerPage = () => {
     navigate(-1);
   };
 
-  const handleSelectVideo = (video) => {
-    setSelectedVideo(video);
-  };
-
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
   };
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="video-player loading">
         <div className="container">
@@ -124,7 +72,7 @@ const VideoPlayerPage = () => {
     );
   }
 
-  if (!course) {
+  if (!singleCourse) {
     return (
       <div className="video-player error">
         <div className="container">
@@ -138,6 +86,10 @@ const VideoPlayerPage = () => {
     );
   }
 
+  const handleChangeVideo = (link)=>{
+   setSelectedVideo(link)
+  }
+
   return (
     <div className="video-player">
       <div className="video-player__header">
@@ -145,7 +97,7 @@ const VideoPlayerPage = () => {
           <button className="btn btn--back" onClick={handleBack}>
             <FaArrowLeft /> Back
           </button>
-          <h1>{course.title}</h1>
+          <h1>{singleCourse.title}</h1>
         </div>
       </div>
 
@@ -165,8 +117,8 @@ const VideoPlayerPage = () => {
 
               {selectedVideo && (
                 <iframe
-                  src={`https://short.icu/${selectedVideo.slug}`}
-                  title={selectedVideo.name}
+                  src={selectedVideo}
+                  // title={selectedVideo.name}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -198,37 +150,40 @@ const VideoPlayerPage = () => {
                 </button>
               </div>
 
-              <div className="video-player__quality">
-                <span className="quality-badge">
-                  {selectedVideo?.resolution}p
-                </span>
+              <div className="video-player__stats ">
                 <span className="duration-badge">
-                  {selectedVideo?.duration}
+                  {singleCourse.duration} course
+                </span>
+                <span className="level-badge">
+                {singleCourse.level}
+                </span>
+                <span className="rating-badge">
+                {singleCourse.rating} ⭐
                 </span>
               </div>
             </div>
 
             <div className="video-player__info">
               <div className="video-player__video-title">
-                <h2>{selectedVideo?.name}</h2>
+                <h2>{singleCourse.title}</h2> 
               </div>
 
               <div className="video-player__instructor">
                 <img
-                  src={course.instructor.avatar}
-                  alt={course.instructor.name}
+                  src={singleCourse.instructor.image}
+                  alt={singleCourse.instructor.name}
                 />
                 <div className="instructor-details">
                   <span className="instructor-label">Instructor</span>
                   <span className="instructor-name">
-                    {course.instructor.name}
+                    {singleCourse.instructor.name}
                   </span>
                 </div>
               </div>
 
               <div className="video-player__description">
-                <h3>About this course</h3>
-                <p>{course.description}</p>
+                <h3>About this Course</h3>
+                <p>{singleCourse.description}</p>
               </div>
             </div>
           </div>
@@ -237,41 +192,15 @@ const VideoPlayerPage = () => {
             <div className="video-player__playlist-header">
               <h3 className="video-player__playlist-title">Premium Videos</h3>
               <span className="video-player__playlist-count">
-                {premiumVideos.length} videos
+              {singleCourse.abyssLinks.length}
+
               </span>
             </div>
 
             <div className="video-player__playlist-items">
-              {premiumVideos.map((video) => (
-                <div
-                  key={video.id}
-                  className={`video-player__playlist-item ${
-                    selectedVideo?.id === video.id ? "active" : ""
-                  }`}
-                  onClick={() => handleSelectVideo(video)}
-                >
-                  <div className="video-player__playlist-thumbnail">
-                    <img src={video.thumbnail} alt={video.name} />
-                    <div className="video-player__playlist-overlay">
-                      {video.status === "Ready" ? <FaPlay /> : <FaLock />}
-                    </div>
-                    <span className="video-player__playlist-duration">
-                      {video.duration}
-                    </span>
-                  </div>
-                  <div className="video-player__playlist-info">
-                    <h4>{video.name}</h4>
-                    <div className="video-player__playlist-meta">
-                      <span className="resolution">{video.resolution}p</span>
-                      <span
-                        className={`video-player__playlist-status ${video.status.toLowerCase()}`}
-                      >
-                        {video.status}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
+               {singleCourse.abyssLinks.map((e,i) => {
+                return <button className="item-button" onClick={()=>handleChangeVideo(e)}>{`Video ${i+1}`}</button>;
+              })}
             </div>
 
             <div className="video-player__playlist-footer">

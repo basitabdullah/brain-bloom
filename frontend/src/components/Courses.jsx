@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
+import {useCourseStore} from "../stores/useCourseStore"
+
 const Courses = () => {
+
+
+  const {getAllCourses,courses : courseData} = useCourseStore()
+
+  useEffect(()=>{
+    getAllCourses()
+  },[])
+
+  console.log(courseData);
+ 
   const courses = [
     {
       id: 1,
@@ -83,9 +95,9 @@ const Courses = () => {
       <div className="container">
         <h2 className="section-title">Popular Courses</h2>
         <div className="courses__grid">
-          {courses.map((course) => (
+          {courseData?.map((course) => (
             <motion.div
-              key={course.id}
+              key={course._id}
               className="courses__card"
               whileHover={{
                 scale: 1.05,
@@ -115,8 +127,9 @@ const Courses = () => {
                 <h3 className="courses__card-title">{course.title}</h3>
                 <div className="courses__card-instructor">
                   <img
-                    src={course.instructor.avatar}
+                    src={course.instructor.image}
                     alt={course.instructor.name}
+                    
                   />
                   <span>{course.instructor.name}</span>
                 </div>
@@ -126,7 +139,7 @@ const Courses = () => {
                     <span>{course.rating}</span>
                   </div>
                   <div className="watch-now">
-                    <Link to={"/watch/454634"} className="courses__card-button">
+                    <Link to={`/watch/${course._id}`} className="courses__card-button">
                       Watch Now
                     </Link>
                   </div>
