@@ -5,6 +5,7 @@ export const useUserStore = create((set, get) => ({
   user: null,
   loading: false,
   checkingAuth: false,
+  subscriber: null,
 
   login: async ({ email, password }) => {
     set({ loading: true });
@@ -34,7 +35,6 @@ export const useUserStore = create((set, get) => ({
     } catch (error) {
       errorToast(error.response.data.message);
       console.log(error);
-      
     }
   },
   logout: async () => {
@@ -56,6 +56,14 @@ export const useUserStore = create((set, get) => ({
       successToast("Logged In Automatically!");
     } catch (error) {
       set({ checkingAuth: false });
+    }
+  },
+  subscribe: async () => {
+    try {
+      const res = await axios.get("auth/subscribe");
+      set({ subscriber: res.data });
+    } catch (error) {
+      console.log(error);
     }
   },
 }));

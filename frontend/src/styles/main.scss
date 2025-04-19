@@ -144,6 +144,22 @@ p {
         }
       }
     }
+
+    .mobile-auth-link {
+      display: none;
+
+      @media (max-width: 768px) {
+        display: block;
+        padding: 10px 15px;
+        font-weight: bold;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+      }
+    }
   }
 
   &__cta {
@@ -1062,26 +1078,15 @@ p {
     margin-bottom: 1.2rem;
     font-size: 0.9rem;
   }
+  .subscribe-button {
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0px;
 
-  .modal__form {
-    .modal__form-group {
-      margin-bottom: 0.8rem;
-
-      label {
-        font-size: 0.9rem;
-        margin-bottom: 0.3rem;
-      }
-
-      input {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.9rem;
-      }
-    }
-
-    button {
-      padding: 0.6rem 1.2rem;
-      font-size: 0.9rem;
-    }
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+   
   }
 
   .modal__footer {
@@ -2238,8 +2243,7 @@ p {
       border-radius: 3px;
     }
 
-
-    .item-button{
+    .item-button {
       display: flex;
       align-items: center;
       padding: 0.8rem 1.5rem;
@@ -2254,20 +2258,8 @@ p {
         background-color: rgba(147, 147, 147, 0.1);
         color: white;
       }
-
-
     }
   }
-
-  
-
-  
-
- 
-
-  
-
-  
 
   &__playlist-footer {
     padding: 1rem 1.5rem;

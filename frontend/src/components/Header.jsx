@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaCrown } from "react-icons/fa";
 import { GiBrain } from "react-icons/gi";
 import ShinyText from "../../animatedTexts/ShinyText/ShinyText";
@@ -16,11 +16,7 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -40,20 +36,50 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
         <nav className={`header__nav ${isMobileMenuOpen ? "open" : ""}`}>
           <ul className="nav-links">
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
             </li>
             <li>
-              <Link to="/courses">Courses</Link>
+              <Link to="/courses" onClick={() => setIsMobileMenuOpen(false)}>Courses</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
             </li>
             <li>
-              <Link to="/contact">Contact</Link>
+              <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
             </li>
             {user?.role === "admin" && (
               <li>
-                <Link to="/admin">Admin</Link>
+                <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)}>Admin</Link>
+              </li>
+            )}
+
+            {/* Mobile-only auth button */}
+            {!user && (
+              <li className="mobile-auth-link">
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsMobileMenuOpen(false);
+                    onSignupClick();
+                  }}
+                >
+                  Sign Up / Login
+                </a>
+              </li>
+            )}
+            {user && (
+              <li className="mobile-auth-link">
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    logout();
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  Logout
+                </a>
               </li>
             )}
           </ul>

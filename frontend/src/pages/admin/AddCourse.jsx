@@ -69,9 +69,8 @@ function AddCourse() {
     e.preventDefault();
     setIsSubmitting(true);
     setMessage({ type: "", text: "" });
-    createCourse({courseData})
+    createCourse({ courseData });
     setIsSubmitting(false);
-
   };
 
   return (
@@ -104,14 +103,22 @@ function AddCourse() {
             </div>
             <div className="form-group">
               <label htmlFor="category">Category</label>
-              <input
-                type="text"
-                id="category"
+              <select
                 name="category"
                 value={courseData.category}
                 onChange={handleInputChange}
                 required
-              />
+                id="category"
+              >
+                <option value="development">Development</option>
+                <option value="science">Science</option>
+                <option value="math">Math</option>
+                <option value="political-science">Political Science</option>
+                <option value="language">Language</option>
+                <option value="reasoning">Reasoning</option>
+                <option value="commerce">Commerce</option>
+                <option value="advance">Advance</option>
+              </select>
             </div>
           </div>
 

@@ -21,8 +21,7 @@ export const useCourseStore = create((set, get) => ({
     try {
       const res = await axios.get("/course/premium");
 
-      set({ courses: res.data.courses });
-      set({ loading: false });
+      set({ courses: res.data.courses,loading: false });
     } catch (error) {
       errorToast(error.response.data.message);
       set({ loading: false });
@@ -33,8 +32,10 @@ export const useCourseStore = create((set, get) => ({
     try {
       const res = await axios.get("/course");
 
-      set({ courses: res.data.courses });
-      set({ loading: false });
+      set({
+        courses: res.data.courses,
+        loading: false,
+      });
     } catch (error) {
       errorToast(error.response.data.message);
       set({ loading: false });
@@ -44,8 +45,7 @@ export const useCourseStore = create((set, get) => ({
     set({ loading: true });
     try {
       const res = await axios.get(`/course/${id}`);
-      set({ singleCourse: res.data.course });
-      set({ loading: false });
+      set({ singleCourse: res.data.course, loading: false });
     } catch (error) {
       errorToast(error.response.data.message);
       set({ loading: false });

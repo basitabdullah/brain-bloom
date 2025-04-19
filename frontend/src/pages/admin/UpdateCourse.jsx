@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import { useCourseStore } from "../../stores/useCourseStore";
 import { useParams } from "react-router-dom";
 
 function UpdateCourse() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState({ type: "", text: "" });
+  const { updateCourse, getSingleCourse, singleCourse } = useCourseStore();
+  const { id } = useParams();
+
+  useEffect(() => {
+    getSingleCourse(id);
+  }, []);
+
   const [courseData, setCourseData] = useState({
     title: "",
     category: "",
@@ -21,11 +30,34 @@ function UpdateCourse() {
     abyssLinks: [""],
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState({ type: "", text: "" });
-  const { updateCourse } = useCourseStore();
-  const { id } = useParams();
-  
+  useEffect(() => {
+    getSingleCourse(id);
+  }, [id]);
+
+  useEffect(() => {
+    if (singleCourse) {
+      setCourseData({
+        title: singleCourse.title || "",
+        category: singleCourse.category || "",
+        description: singleCourse.description || "",
+        duration: singleCourse.duration || "",
+        level: singleCourse.level || "beginner",
+        instructor: {
+          name: singleCourse.instructor?.name || "",
+          image: singleCourse.instructor?.image || "",
+        },
+        image: singleCourse.image || "",
+        rating: singleCourse.rating || 0,
+        reviews: singleCourse.reviews || 0,
+        youtubeLink: singleCourse.youtubeLink || "",
+        abyssLinks: singleCourse.abyssLinks?.length
+          ? singleCourse.abyssLinks
+          : [""],
+      });
+    }
+  }, [singleCourse]);
+
+  console.log("Single Course", singleCourse);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

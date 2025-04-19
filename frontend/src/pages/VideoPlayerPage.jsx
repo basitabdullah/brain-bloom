@@ -152,7 +152,7 @@ const VideoPlayerPage = () => {
 
               <div className="video-player__stats ">
                 <span className="duration-badge">
-                  {singleCourse.duration} course
+                  {singleCourse.duration}/hour course
                 </span>
                 <span className="level-badge">
                 {singleCourse.level}

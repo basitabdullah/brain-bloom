@@ -135,3 +135,10 @@ export const getProfile = async (req, res) => {
     });
   }
 };
+export const subscribe = async (req, res) => {
+  try {
+   
+  } catch (error) {
+    
+  }
+};
