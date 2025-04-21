@@ -37,6 +37,11 @@ export const login = async (req, res) => {
     });
   }
 
+  //subscription check
+  if (user.role === "subscriber" && Date.now() > new Date(user.subscriptionEnd)) {
+    user.role = "user";
+    await user.save();
+  }
   const isPasswordCorrect = await bcrypt.compare(password, user.password);
   if (!isPasswordCorrect) {
     return res.status(401).json({

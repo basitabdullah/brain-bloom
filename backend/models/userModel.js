@@ -32,6 +32,22 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
+  razorpayPaymentId: {
+    type: String,
+    default: null,
+  },
+  razorpaySubscriptionId: {
+    type: String,
+    default: null,
+  },
+  subscriptionStart: {
+    type: Date,
+    default: null,
+  },
+  subscriptionEnd: {
+    type: Date,
+    default: null,
+  },
 });
 
 export const hashPassword = async (password) => {

@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCrown } from "react-icons/fa";
 import { useSubscriptionStore } from "../stores/useSubscribeStore";
+import axios from "../lib/axios";
+import { PulseLoader } from "react-spinners";
 
 const SubscriptionModal = ({ isOpen, onClose }) => {
-  const { subscribe } = useSubscriptionStore();
+  const { subscribe, loading } = useSubscriptionStore();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -21,9 +23,24 @@ const SubscriptionModal = ({ isOpen, onClose }) => {
       subscription_id: result.subscriptionId,
       name: "BrainBloom Premium",
       description: "30-day subscription",
-      handler: function (response) {
+      handler: async function (response) {
         alert("Payment successful");
         console.log(response);
+        const verifyResponse = await axios.post(
+          "/subscribe/verify-subscription",
+          {
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+            razorpay_subscription_id: response.razorpay_subscription_id,
+          }
+        );
+
+        if (verifyResponse.data.success) {
+          alert("Subscription activated!");
+          onClose()
+        } else {
+          alert("Verification failed");
+        }
       },
       theme: {
         color: "#3399cc",
@@ -70,8 +87,14 @@ const SubscriptionModal = ({ isOpen, onClose }) => {
             onClick={handleSubmit}
             type="submit"
             className="subscribe-button"
+            disabled={loading}
           >
-            <FaCrown size={17} style={{ marginRight: "8px" }} /> Subscribe Now
+            <FaCrown size={17} style={{ marginRight: "8px" }} />{" "}
+            {loading ? (
+              <PulseLoader size={8} color="#b1b1b1" />
+            ) : (
+              "₹199 Subscribe Now !"
+            )}
           </button>
           <p className="modal__footer">
             By subscribing, you agree to our Terms of Service and our Privacy
