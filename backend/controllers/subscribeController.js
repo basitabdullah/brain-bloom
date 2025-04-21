@@ -1,7 +1,6 @@
 import Razorpay from "razorpay";
 import User from "../models/userModel.js";
 import crypto from "crypto";
-import { log } from "console";
 
 export const subscribe = async (req, res) => {
   const instance = new Razorpay({
@@ -11,7 +10,6 @@ export const subscribe = async (req, res) => {
 
   try {
     const user = req.user;
-    console.log(user);
 
     if (!user) {
       return res.status(401).json({ message: "User not found!" });
@@ -62,13 +60,10 @@ export const verifySubscription = async (req, res) => {
 
   const { razorpay_payment_id, razorpay_subscription_id, razorpay_signature } =
     req.body;
-  log(razorpay_signature);
   const generatedSigniture = crypto
     .createHmac("sha256", key_secret)
     .update(`${razorpay_payment_id}|${razorpay_subscription_id}`)
     .digest("hex");
-
-  log(generatedSigniture);
 
   if (generatedSigniture !== razorpay_signature) {
     return res
@@ -77,7 +72,6 @@ export const verifySubscription = async (req, res) => {
   }
   try {
     const userId = req.user.id;
-    log("userId :", userId)
 
     await User.findByIdAndUpdate(userId, {
       role: "subscriber",

@@ -77,7 +77,7 @@ export const register = async (req, res) => {
       password: hashedPassword,
       phone,
     });
-    const token = generateJwtToken(user._id);
+    const token = await generateJwtToken(user._id);
 
     // res.cookie("jwtAccessToken", token, {
     //   httpOnly: true,

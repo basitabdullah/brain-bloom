@@ -12,7 +12,6 @@ export const useSubscriptionStore = create((set, get) => ({
       const res = await axios.get("/subscribe");
       set({ data: res.data });
       set({ loading: false });
-
       return res.data;
     } catch (error) {
       errorToast(error.response?.data?.message || "Something went wrong");

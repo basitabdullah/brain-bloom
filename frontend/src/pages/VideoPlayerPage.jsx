@@ -4,14 +4,11 @@ import {
   FaArrowLeft,
   FaExpand,
   FaCompress,
-  FaPlay,
-  FaLock,
   FaDownload,
   FaHeart,
   FaRegHeart,
   FaShare,
 } from "react-icons/fa";
-import axios from "axios";
 import { useCourseStore } from "../stores/useCourseStore";
 
 const VideoPlayerPage = () => {
@@ -199,13 +196,13 @@ const VideoPlayerPage = () => {
 
             <div className="video-player__playlist-items">
                {singleCourse.abyssLinks.map((e,i) => {
-                return <button className="item-button" onClick={()=>handleChangeVideo(e)}>{`Video ${i+1}`}</button>;
+                return <button className="item-button" onClick={()=>handleChangeVideo(e)}>{`${singleCourse.title} Lecture ${i+1}`}</button>;
               })}
             </div>
 
-            <div className="video-player__playlist-footer">
+            {/* <div className="video-player__playlist-footer">
               <button className="btn btn--outline">View All Videos</button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

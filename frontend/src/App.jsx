@@ -27,6 +27,8 @@ import UsersManagement from './pages/admin/UsersManagement';
 import Payments from './pages/admin/Payments';
 import AppLayout from './components/AppLayout';
 import UpdateCourse from "./pages/admin/UpdateCourse";
+import SuccessPage from "./components/SuccessPage";
+import FailurePage from "./components/FailurePage";
 
 function App() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -65,12 +67,14 @@ function App() {
           <ScrollToTop>
             <Toaster position="bottom-right" reverseOrder={false} />
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/"  element={<HomePage />} />
               <Route path="/courses" element={<CoursesPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/terms" element={<TearmsAndServices />} />
+              <Route path="/success" element={<SuccessPage />} />
+              <Route path="/failure" element={<FailurePage />} />
               <Route
                 path="/watch/:courseId"
                 element={

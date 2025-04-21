@@ -1,94 +1,28 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-
-import {useCourseStore} from "../stores/useCourseStore"
+import { FaLock } from "react-icons/fa";
+import { useCourseStore } from "../stores/useCourseStore";
+import { useUserStore } from "../stores/useUserStore";
+import { errorToast } from "../lib/toast";
 
 const Courses = () => {
+  const { getAllCourses, courses: courseData } = useCourseStore();
+  const { user } = useUserStore();
 
+  useEffect(() => {
+    getAllCourses();
+  }, []);
 
-  const {getAllCourses,courses : courseData} = useCourseStore()
+  const handleClick = () => {
+    if (user.role === "user") {
+      errorToast("You need to Subscribe first to get full access!");
+    }
+  };
 
-  useEffect(()=>{
-    getAllCourses()
-  },[])
-
-  console.log(courseData);
- 
-  const courses = [
-    {
-      id: 1,
-      title: "Introduction to Web Development",
-      category: "Development",
-      image:
-        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      instructor: {
-        name: "John Smith",
-        avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-      },
-      rating: 4.8,
-    },
-    {
-      id: 2,
-      title: "Data Science Fundamentals",
-      category: "Data Science",
-      image:
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      instructor: {
-        name: "Sarah Johnson",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
-      },
-      rating: 4.9,
-    },
-    {
-      id: 3,
-      title: "Digital Marketing Masterclass",
-      category: "Marketing",
-      image:
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      instructor: {
-        name: "Michael Brown",
-        avatar: "https://randomuser.me/api/portraits/men/2.jpg",
-      },
-      rating: 4.7,
-    },
-    {
-      id: 4,
-      title: "UX/UI Design Principles",
-      category: "Design",
-      image:
-        "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      instructor: {
-        name: "Emily Davis",
-        avatar: "https://randomuser.me/api/portraits/women/2.jpg",
-      },
-      rating: 4.6,
-    },
-    {
-      id: 5,
-      title: "Machine Learning for Beginners",
-      category: "AI & ML",
-      image:
-        "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      instructor: {
-        name: "David Wilson",
-        avatar: "https://randomuser.me/api/portraits/men/3.jpg",
-      },
-      rating: 4.9,
-    },
-    {
-      id: 6,
-      title: "Business Strategy & Leadership",
-      category: "Business",
-      image:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      instructor: {
-        name: "Jessica Taylor",
-        avatar: "https://randomuser.me/api/portraits/women/3.jpg",
-      },
-      rating: 4.8,
-    },
-  ];
+  const handleLockClick = () => {
+    errorToast("You need to login first!");
+  };
 
   return (
     <section id="courses" className="courses section">
@@ -129,7 +63,6 @@ const Courses = () => {
                   <img
                     src={course.instructor.image}
                     alt={course.instructor.name}
-                    
                   />
                   <span>{course.instructor.name}</span>
                 </div>
@@ -138,11 +71,24 @@ const Courses = () => {
                     ★★★★★
                     <span>{course.rating}</span>
                   </div>
-                  <div className="watch-now">
-                    <Link to={`/watch/${course._id}`} className="courses__card-button">
-                      Watch Now
-                    </Link>
-                  </div>
+                  {user ? (
+                    <div className="watch-now">
+                      <Link
+                        to={`/watch/${course._id}`}
+                        className="courses__card-button"
+                        onClick={handleClick}
+                      >
+                        Watch Now
+                      </Link>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={handleLockClick}
+                      className="watch-now-lock"
+                    >
+                      Watch Now ! <FaLock />{" "}
+                    </button>
+                  )}
                 </div>
               </div>
             </motion.div>

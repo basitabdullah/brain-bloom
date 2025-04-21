@@ -4,14 +4,15 @@ import { FaCrown } from "react-icons/fa";
 import { useSubscriptionStore } from "../stores/useSubscribeStore";
 import axios from "../lib/axios";
 import { PulseLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
 
 const SubscriptionModal = ({ isOpen, onClose }) => {
   const { subscribe, loading } = useSubscriptionStore();
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const result = await subscribe(); // ensure data is fetched first
-    console.log(result);
 
     if (!result?.subscriptionId) {
       console.error("Subscription ID not available");
@@ -24,8 +25,6 @@ const SubscriptionModal = ({ isOpen, onClose }) => {
       name: "BrainBloom Premium",
       description: "30-day subscription",
       handler: async function (response) {
-        alert("Payment successful");
-        console.log(response);
         const verifyResponse = await axios.post(
           "/subscribe/verify-subscription",
           {
@@ -36,10 +35,11 @@ const SubscriptionModal = ({ isOpen, onClose }) => {
         );
 
         if (verifyResponse.data.success) {
-          alert("Subscription activated!");
-          onClose()
+          onClose();
+          navigate("/success");
         } else {
-          alert("Verification failed");
+          navigate("/failure");
+
         }
       },
       theme: {

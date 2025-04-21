@@ -2,19 +2,26 @@ import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useCourseStore } from "../stores/useCourseStore";
+import { useUserStore } from "../stores/useUserStore";
+import { errorToast } from "../lib/toast";
+import { FaLock } from "react-icons/fa";
 
 const CoursesPage = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const { courses, getAllCourses, loading } = useCourseStore();
-
+  const { user } = useUserStore();
   useEffect(() => {
     getAllCourses();
   }, []);
 
-  console.log(courses);
-
-  
-
+  const handleClick = () => {
+    if (user.role === "user") {
+      errorToast("You need to Subscribe first to get full access!");
+    }
+  };
+ const handleLockClick = () => {
+    errorToast("You need to login first!");
+  };
   const filters = [
     { id: "all", name: "All Courses" },
     { id: "development", name: "Development" },
@@ -31,10 +38,9 @@ const CoursesPage = () => {
       ? courses
       : courses.filter((course) => course.category === activeFilter);
 
-if(loading){
-  return <div>loading courses...</div>
-}
-
+  if (loading) {
+    return <div>loading courses...</div>;
+  }
 
   return (
     <div className="courses-page">
@@ -94,12 +100,19 @@ if(loading){
                   </div>
                 </div>
 
-                <Link
-                  to={`/watch/${course._id}`}
-                  className="btn btn--primary btn--full"
-                >
-                  Watch Now
-                </Link>
+                {user ? (
+                  <Link
+                    to={`/watch/${course._id}`}
+                    className="btn btn--primary btn--full"
+                    onClick={handleClick}
+                  >
+                    Watch Now
+                  </Link>
+                ) : (
+                  <button onClick={handleLockClick} className="watch-now-lock">
+                    Watch Now <FaLock />
+                  </button>
+                )}
               </div>
             </div>
           ))}
