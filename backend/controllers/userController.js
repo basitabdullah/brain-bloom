@@ -124,7 +124,7 @@ export const getProfile = async (req, res) => {
   try {
     const user = req.user;
     if (!user) {
-      res.status(401).json({
+     return  res.status(401).json({
         message: "User Not Found!",
       });
     }
@@ -133,12 +133,5 @@ export const getProfile = async (req, res) => {
     res.status(400).json({
       message: error.message,
     });
-  }
-};
-export const subscribe = async (req, res) => {
-  try {
-   
-  } catch (error) {
-    
   }
 };

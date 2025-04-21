@@ -1,33 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCrown } from "react-icons/fa";
+import { useSubscriptionStore } from "../stores/useSubscribeStore";
 
 const SubscriptionModal = ({ isOpen, onClose }) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [error, setError] = useState("");
-
-  const handleSubmit = (e) => {
+  const { subscribe } = useSubscriptionStore();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Basic validation
-    if (!name || !email || !phone) {
-      setError("Please fill in all fields");
+
+    const result = await subscribe(); // ensure data is fetched first
+    console.log(result);
+
+    if (!result?.subscriptionId) {
+      console.error("Subscription ID not available");
       return;
     }
 
-    // Here you would typically handle the subscription logic
-    console.log("Subscription attempted with:", { name, email, phone });
+    const options = {
+      key: "rzp_test_ztjBz64y8emFWG", //use the sent id here
+      subscription_id: result.subscriptionId,
+      name: "BrainBloom Premium",
+      description: "30-day subscription",
+      handler: function (response) {
+        alert("Payment successful");
+        console.log(response);
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
 
-    // Clear form and close modal
-    setName("");
-    setEmail("");
-    setPhone("");
-    setError("");
-    onClose();
-
-    // Show success message (you could implement a toast notification here)
-    alert("Thank you for subscribing to BrainBloom!");
+    const rzp = new window.Razorpay(options);
+    rzp.open();
   };
 
   if (!isOpen) return null;
@@ -62,12 +66,16 @@ const SubscriptionModal = ({ isOpen, onClose }) => {
             personalized learning paths at only Rs.199 per month
           </p>
 
-          <button type="submit" className="subscribe-button">
+          <button
+            onClick={handleSubmit}
+            type="submit"
+            className="subscribe-button"
+          >
             <FaCrown size={17} style={{ marginRight: "8px" }} /> Subscribe Now
           </button>
           <p className="modal__footer">
-            By subscribing, you agree to our Terms of Service and our Privacy Policy.
-            
+            By subscribing, you agree to our Terms of Service and our Privacy
+            Policy.
           </p>
         </motion.div>
       </motion.div>

@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema({
     enum: ["user", "subscriber", "admin"],
     required: true,
   },
+  razorpayCustomerId: {
+    type: String,
+    default: null,
+  },
 });
 
 export const hashPassword = async (password) => {

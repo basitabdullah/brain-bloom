@@ -12,7 +12,7 @@ export const isLoggedIn = async (req, res, next) => {
     }
 
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    const user = User.findById(decodedToken.userId, "-password");
+    const user = await User.findById(decodedToken.userId, "-password");
     if (!user) {
       return res.status(401).json({ message: "Unauthorized- User not found!" });
     }
