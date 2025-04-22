@@ -2,7 +2,7 @@ import axios from "axios"
 
 
 const axiosInstance = axios.create({
-    // baseURL : "https://brainbloom.sbs/api",
+    // baseURL : "https://brainbloom.sbs/api", 
     baseURL : "http://localhost:5000/api",
     withCredentials: true,
     headers: {
@@ -11,4 +11,4 @@ const axiosInstance = axios.create({
       
 })
 
-export default axiosInstance;
+export default axiosInstance; 
