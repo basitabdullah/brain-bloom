@@ -112,14 +112,18 @@ const VideoPlayerPage = () => {
                 </button>
               </div>
 
-              {selectedVideo && (
+              {selectedVideo ? (
                 <iframe
                   src={selectedVideo}
-                  // title={selectedVideo.name}
+                  title={`${singleCourse.title} video player`}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
+              ) : (
+                <div className="video-player__placeholder">
+                  <p>Select a video from the playlist to start watching</p>
+                </div>
               )}
             </div>
 
