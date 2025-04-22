@@ -29,6 +29,8 @@ import AppLayout from './components/AppLayout';
 import UpdateCourse from "./pages/admin/UpdateCourse";
 import SuccessPage from "./components/SuccessPage";
 import FailurePage from "./components/FailurePage";
+import Profile from "./pages/Profile";
+import SubDetails from "./pages/SubDetails";
 
 function App() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -75,6 +77,8 @@ function App() {
               <Route path="/terms" element={<TearmsAndServices />} />
               <Route path="/success" element={<SuccessPage />} />
               <Route path="/failure" element={<FailurePage />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/subscription-detail" element={<SubDetails />} />
               <Route
                 path="/watch/:courseId"
                 element={

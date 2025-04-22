@@ -4,11 +4,12 @@ import { FaCrown } from "react-icons/fa";
 import { GiBrain } from "react-icons/gi";
 import ShinyText from "../../animatedTexts/ShinyText/ShinyText";
 import { useUserStore } from "../stores/useUserStore";
-
+import { FaUser, FaCog } from "react-icons/fa";
 const Header = ({ onSignupClick, onSubscriptionClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { checkAuth, logout, user } = useUserStore();
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
   useEffect(() => {
     checkAuth();
@@ -36,20 +37,30 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
         <nav className={`header__nav ${isMobileMenuOpen ? "open" : ""}`}>
           <ul className="nav-links">
             <li>
-              <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+              <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
+                Home
+              </Link>
             </li>
             <li>
-              <Link to="/courses" onClick={() => setIsMobileMenuOpen(false)}>Courses</Link>
+              <Link to="/courses" onClick={() => setIsMobileMenuOpen(false)}>
+                Courses
+              </Link>
             </li>
             <li>
-              <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
+              <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>
+                About
+              </Link>
             </li>
             <li>
-              <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
+              <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                Contact
+              </Link>
             </li>
             {user?.role === "admin" && (
               <li>
-                <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)}>Admin</Link>
+                <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)}>
+                  Admin
+                </Link>
               </li>
             )}
 
@@ -69,18 +80,46 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
               </li>
             )}
             {user && (
-              <li className="mobile-auth-link">
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    logout();
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  Logout
-                </a>
-              </li>
+              <>
+                <li className="mobile-auth-link">
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      logout();
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    Logout
+                  </a>
+                </li>
+                {user.role === "user" && (
+                  <li className="mobile-auth-link">
+                    <a
+                      href="#"
+                      id="subscription-btn"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onSubscriptionClick();
+                        setIsMobileMenuOpen(false);
+                      }}
+                    >
+                      <ShinyText
+                        text={<FaCrown size={20} />}
+                        disabled={false}
+                        speed={3}
+                        className="custom-class"
+                      />
+                      <ShinyText
+                        text="Subscribe"
+                        disabled={false}
+                        speed={3}
+                        className="custom-class"
+                      />
+                    </a>
+                  </li>
+                )}
+              </>
             )}
           </ul>
         </nav>
@@ -102,27 +141,69 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
               Sign Up
             </a>
           )}
-          <a
-            href="#"
-            className="btn btn--secondary subscription-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              onSubscriptionClick();
-            }}
-          >
-            <ShinyText
-              text={<FaCrown size={14} />}
-              disabled={false}
-              speed={3}
-              className="custom-class"
-            />
-            <ShinyText
-              text="Subscribe"
-              disabled={false}
-              speed={3}
-              className="custom-class"
-            />
-          </a>
+          {user && user.role === "user" && (
+            <a
+              href="#"
+              className="btn btn--secondary subscription-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                onSubscriptionClick();
+              }}
+            >
+              <ShinyText
+                text={<FaCrown size={14} />}
+                disabled={false}
+                speed={3}
+                className="custom-class"
+              />
+              <ShinyText
+                text="Subscribe"
+                disabled={false}
+                speed={3}
+                className="custom-class"
+              />
+            </a>
+          )}
+
+          {user && (
+            <button
+              className="user-profile"
+              onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+            >
+              {user.name.split(" ")[0].charAt(0)}
+            </button>
+          )}
+          {user && isProfileMenuOpen && (
+            <div className="user-menu">
+              <div className="user-info">
+                <div className="avatar">
+                  {user.name.split(" ")[0].charAt(0)}
+                  {user.name.split(" ")[1]
+                    ? user.name.split(" ")[1].charAt(0)
+                    : ""}
+                </div>
+                <div className="details">
+                  <p className="name">{user.name}</p>
+                  <p className="email">{user.email}</p>
+                </div>
+              </div>
+              <span className="membership">
+                {user.role === "subscriber" ? "Premium Member" : user.role}
+              </span>
+              <ul className="menu-list">
+                <Link to={"/profile"} style={{
+                  textDecoration : "none"
+                }} className="menu-item">
+                  <FaUser className="icon" /> Profile
+                </Link>
+                <Link to="/subscription-detail" className="menu-item" style={{
+                  textDecoration : "none"
+                }}>
+                  <FaCog className="icon" /> Subscription
+                </Link>
+              </ul>
+            </div>
+          )}
         </div>
 
         <button

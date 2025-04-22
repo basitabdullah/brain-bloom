@@ -38,11 +38,11 @@ h1 {
   @media (max-width: 768px) {
     font-size: 2.5rem;
   }
-  
+
   @media (max-width: 480px) {
     font-size: 2.2rem;
   }
-  
+
   @media (max-width: 380px) {
     font-size: 1.8rem;
   }
@@ -54,11 +54,11 @@ h2 {
   @media (max-width: 768px) {
     font-size: 2rem;
   }
-  
+
   @media (max-width: 480px) {
     font-size: 1.8rem;
   }
-  
+
   @media (max-width: 380px) {
     font-size: 1.5rem;
   }
@@ -70,11 +70,11 @@ h3 {
   @media (max-width: 768px) {
     font-size: 1.5rem;
   }
-  
+
   @media (max-width: 480px) {
     font-size: 1.3rem;
   }
-  
+
   @media (max-width: 380px) {
     font-size: 1.2rem;
   }
@@ -83,12 +83,12 @@ h3 {
 p {
   margin-bottom: 1.5rem;
   font-size: 1.1rem;
-  
+
   @media (max-width: 480px) {
     font-size: 1rem;
     margin-bottom: 1.2rem;
   }
-  
+
   @media (max-width: 380px) {
     font-size: 0.95rem;
     margin-bottom: 1rem;
@@ -101,15 +101,15 @@ p {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
-  
+
   @media (max-width: 576px) {
     padding: 0 1.5rem;
   }
-  
+
   @media (max-width: 480px) {
     padding: 0 1rem;
   }
-  
+
   @media (max-width: 380px) {
     padding: 0 0.8rem;
   }
@@ -117,11 +117,11 @@ p {
 
 .section {
   padding: 5rem 0;
-  
+
   @media (max-width: 480px) {
     padding: 3rem 0;
   }
-  
+
   @media (max-width: 380px) {
     padding: 2rem 0;
   }
@@ -129,11 +129,11 @@ p {
   &-title {
     text-align: center;
     margin-bottom: 3rem;
-    
+
     @media (max-width: 480px) {
       margin-bottom: 2rem;
     }
-    
+
     @media (max-width: 380px) {
       margin-bottom: 1.5rem;
     }
@@ -155,6 +155,32 @@ p {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  #subscription-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #353535;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.5rem 2rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #fff;
+      color: #000;
+      border-color: #000;
+      transform: translateY(-2px);
+    }
+
+    svg {
+      margin-right: 0.25rem;
+      color: gold;
+    }
   }
 
   &__logo {
@@ -189,7 +215,7 @@ p {
         flex-direction: column;
         gap: 1rem;
       }
-      
+
       @media (max-width: 380px) {
         gap: 0.7rem;
       }
@@ -261,6 +287,104 @@ p {
         }
       }
     }
+
+    .user-profile {
+      margin-left: 20px;
+      height: 15px;
+      width: 15px;
+      padding: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: rgb(221, 221, 221);
+    }
+
+    .user-menu {
+      position: absolute;
+      right: 10px;
+      top: 50px;
+      width: 250px;
+      background-color: #1f1f1f; // dark background
+      color: #ffffff;
+      border: 1px solid #333;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      z-index: 100;
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+        border-bottom: 1px solid #333;
+
+        .avatar {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: #444;
+          color: white;
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        .details {
+          .name {
+            font-weight: 600;
+            font-size: 14px;
+          }
+
+          .email {
+            font-size: 12px;
+            color: #aaa;
+          }
+        }
+      }
+
+      .membership {
+        display: inline-block;
+        margin: 8px 16px;
+        font-size: 11px;
+        color: #90ee90;
+        background-color: #2e7d32;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-weight: bold;
+      }
+
+      .menu-list {
+        list-style: none;
+        padding: 0;
+        margin: 8px 0;
+
+        .menu-item {
+          padding: 12px 16px;
+          font-size: 14px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          transition: background 0.2s ease;
+          color: #fff;
+
+          .icon {
+            font-size: 16px;
+          }
+
+          &:hover {
+            background-color: #2c2c2c;
+          }
+        }
+      }
+    }
   }
 
   &__mobile-toggle {
@@ -274,7 +398,7 @@ p {
     cursor: pointer;
     padding: 0;
     z-index: 10;
-    
+
     @media (max-width: 380px) {
       width: 25px;
       height: 18px;
@@ -316,12 +440,12 @@ p {
       padding: 5rem 2rem 2rem;
       transition: all 0.3s ease;
       z-index: 5;
-      
+
       @media (max-width: 480px) {
         width: 80%;
         padding: 4rem 1.5rem 1.5rem;
       }
-      
+
       @media (max-width: 380px) {
         width: 85%;
         padding: 4rem 1rem 1rem;
@@ -377,12 +501,12 @@ p {
     @media (max-width: 768px) {
       flex-direction: column;
     }
-    
+
     @media (max-width: 480px) {
       margin-top: 15px;
       gap: 0.8rem;
     }
-    
+
     @media (max-width: 380px) {
       margin-top: 10px;
       gap: 0.6rem;
@@ -417,11 +541,11 @@ p {
       height: 400px;
       border-radius: 10px;
       box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
-      
+
       @media (max-width: 480px) {
         height: 300px;
       }
-      
+
       @media (max-width: 380px) {
         height: 250px;
       }
@@ -443,12 +567,12 @@ p {
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
     }
-    
+
     @media (max-width: 480px) {
       gap: 1.5rem;
       margin-top: 20px;
     }
-    
+
     @media (max-width: 380px) {
       gap: 1rem;
       margin-top: 15px;
@@ -460,11 +584,11 @@ p {
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.05);
     transition: $transition;
-    
+
     @media (max-width: 480px) {
       padding: 1.5rem;
     }
-    
+
     @media (max-width: 380px) {
       padding: 1.2rem;
     }
@@ -501,11 +625,11 @@ p {
     @media (max-width: 576px) {
       grid-template-columns: 1fr;
     }
-    
+
     @media (max-width: 480px) {
       gap: 1.5rem;
     }
-    
+
     @media (max-width: 380px) {
       gap: 1rem;
     }
@@ -619,11 +743,11 @@ p {
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
     }
-    
+
     @media (max-width: 480px) {
       gap: 1.5rem;
     }
-    
+
     @media (max-width: 380px) {
       gap: 1rem;
     }
@@ -691,11 +815,11 @@ p {
       flex-direction: column;
       max-width: 350px;
     }
-    
+
     @media (max-width: 480px) {
       max-width: 320px;
     }
-    
+
     @media (max-width: 380px) {
       max-width: 280px;
     }
@@ -876,12 +1000,12 @@ p {
   text-decoration: none;
   cursor: pointer;
   transition: $transition;
-  
+
   @media (max-width: 480px) {
     padding: 0.7rem 1.5rem;
     font-size: 0.95rem;
   }
-  
+
   @media (max-width: 380px) {
     padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
@@ -963,12 +1087,12 @@ p {
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: auto;
   height: 70vh;
-  
+
   @media (max-width: 480px) {
     padding: 1.5rem;
     height: 75vh;
   }
-  
+
   @media (max-width: 380px) {
     padding: 1rem;
     width: 95%;
@@ -1115,11 +1239,11 @@ p {
     @media (max-width: 576px) {
       grid-template-columns: 1fr;
     }
-    
+
     @media (max-width: 480px) {
       gap: 1.5rem;
     }
-    
+
     @media (max-width: 380px) {
       gap: 1rem;
     }
@@ -2129,7 +2253,7 @@ p {
     border-bottom: 1px solid #222;
     margin-bottom: 2rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    
+
     @media (max-width: 576px) {
       padding: 1rem 0;
       margin-bottom: 1rem;
@@ -2189,14 +2313,14 @@ p {
       margin-bottom: 2rem;
     }
   }
-  
+
   @media (max-width: 576px) {
     padding-bottom: 2rem;
-    
+
     .container {
       padding: 0 0.8rem;
     }
-    
+
     &__main {
       margin-bottom: 1rem;
     }
