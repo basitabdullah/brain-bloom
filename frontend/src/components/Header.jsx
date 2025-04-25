@@ -5,6 +5,7 @@ import { GiBrain } from "react-icons/gi";
 import ShinyText from "../../animatedTexts/ShinyText/ShinyText";
 import { useUserStore } from "../stores/useUserStore";
 import { FaUser, FaCog } from "react-icons/fa";
+import {ClipLoader} from "react-spinners"
 const Header = ({ onSignupClick, onSubscriptionClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,6 +24,8 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  
 
   return (
     <header className={`header ${isScrolled ? "scrolled" : ""}`}>
@@ -170,7 +173,7 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
               className="user-profile"
               onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
             >
-              {user.name.split(" ")[0].charAt(0)}
+              {user.name?.split?.(" ")?.[0]?.charAt?.(0)?.toUpperCase() || "U"}
             </button>
           )}
           {user && isProfileMenuOpen && (
@@ -191,14 +194,22 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
                 {user.role === "subscriber" ? "Premium Member" : user.role}
               </span>
               <ul className="menu-list">
-                <Link to={"/profile"} style={{
-                  textDecoration : "none"
-                }} className="menu-item">
+                <Link
+                  to={"/profile"}
+                  style={{
+                    textDecoration: "none",
+                  }}
+                  className="menu-item"
+                >
                   <FaUser className="icon" /> Profile
                 </Link>
-                <Link to="/subscription-detail" className="menu-item" style={{
-                  textDecoration : "none"
-                }}>
+                <Link
+                  to="/subscription-detail"
+                  className="menu-item"
+                  style={{
+                    textDecoration: "none",
+                  }}
+                >
                   <FaCog className="icon" /> Subscription
                 </Link>
               </ul>

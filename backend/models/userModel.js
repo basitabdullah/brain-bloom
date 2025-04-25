@@ -28,10 +28,10 @@ const userSchema = new mongoose.Schema({
     enum: ["user", "subscriber", "admin"],
     required: true,
   },
-  razorpayCustomerId: {
-    type: String,
-    default: null,
-  },
+  // razorpayCustomerId: {
+  //   type: String,
+  //   default: null,
+  // },
   razorpayPaymentId: {
     type: String,
     default: null,

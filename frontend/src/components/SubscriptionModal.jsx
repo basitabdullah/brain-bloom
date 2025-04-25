@@ -10,44 +10,49 @@ const SubscriptionModal = ({ isOpen, onClose }) => {
   const { subscribe, loading } = useSubscriptionStore();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const result = await subscribe(); // ensure data is fetched first
+  const handleSubscribe = async () => {
+    const order = await subscribe();
 
-    if (!result?.subscriptionId) {
-      console.error("Subscription ID not available");
+    if (!order) {
+      console.error("Order not found!");
       return;
     }
 
     const options = {
-      key: "rzp_test_ztjBz64y8emFWG", //use the sent id here
-      subscription_id: result.subscriptionId,
+      key: "rzp_test_ztjBz64y8emFWG",
+      amount: order.subscription.amount,
+      currency: "INR",
       name: "BrainBloom Premium",
-      description: "30-day subscription",
+      description: "Monthly Access",
+      order_id: order.subscription.id,
+
       handler: async function (response) {
         const verifyResponse = await axios.post(
           "/subscribe/verify-subscription",
           {
+            razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
-            razorpay_subscription_id: response.razorpay_subscription_id,
           }
         );
 
         if (verifyResponse.data.success) {
-          onClose();
+            onClose()
           navigate("/success");
         } else {
           navigate("/failure");
-
         }
       },
+      prefill: {
+        name: "Fahim Abdullah",
+        email: "fahim@example.com",
+      },
       theme: {
-        color: "#3399cc",
+        color: "#000",
       },
     };
 
-    const rzp = new window.Razorpay(options);
+    const rzp = new Razorpay(options);
     rzp.open();
   };
 
@@ -84,7 +89,7 @@ const SubscriptionModal = ({ isOpen, onClose }) => {
           </p>
 
           <button
-            onClick={handleSubmit}
+            onClick={handleSubscribe}
             type="submit"
             className="subscribe-button"
             disabled={loading}

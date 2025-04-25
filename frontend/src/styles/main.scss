@@ -142,10 +142,9 @@ p {
 
 // Header Styles - Single Dark Color
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
+  position: sticky;
+  top: 0;
   z-index: 100;
   background-color: #121212; // Dark background color
   padding: 0.8rem 0;
@@ -1494,11 +1493,10 @@ p {
 
 // About Page Styles - Dark Theme
 .about-page {
-  padding-top: 80px; // Space for fixed header
-  background-color: #121212; // Very dark gray/almost black background
-  color: #e0e0e0; // Light text color for better readability
+  padding-top: 80px; 
+  color: #e0e0e0; 
 
-  // Common section styling
+ 
   section {
     padding: 4rem 0;
   }
@@ -2248,12 +2246,11 @@ p {
   }
 
   &__header {
-    background-color: #121212;
     padding: 1.2rem 0;
     border-bottom: 1px solid #222;
     margin-bottom: 2rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-
+    margin-top: 20px;
     @media (max-width: 576px) {
       padding: 1rem 0;
       margin-bottom: 1rem;

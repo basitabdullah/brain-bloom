@@ -1,167 +1,200 @@
-import React, { useState } from 'react';
-import { FiCheckCircle, FiXCircle } from 'react-icons/fi';
+import React, { useState } from "react";
+import { FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { useUserStore } from "../stores/useUserStore";
+import { useSubscriptionStore } from "../stores/useSubscribeStore";
+import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 const SubscriptionDetail = () => {
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
-  const subscription = {
-    isPremium: true,
-    subscriptionStart: '2025-04-21T06:36:41.265+00:00',
-    subscriptionEnd: '2025-05-21T06:36:41.265+00:00',
+  const { user } = useUserStore();
+  const { cancelSubscription, loading } = useSubscriptionStore();
+
+  if (!user) {
+    return navigate("/");
+  }
+
+  const handleCancelSubcription = () => {
+    cancelSubscription(user._id);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
-  const isActive = new Date(subscription.subscriptionEnd) > new Date();
-
-  const containerStyle = {
-    backgroundColor: '#121212',
-    color: '#fff',
-    minHeight: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontFamily: 'sans-serif',
-    padding: '20px',
-    position: 'relative',
-  };
-
-  const cardStyle = {
-    backgroundColor: '#1e1e1e',
-    padding: '40px',
-    borderRadius: '16px',
-    boxShadow: '0 0 20px rgba(0, 255, 255, 0.1)',
-    width: '420px',
-    border: '1px solid #2e2e2e',
-  };
-
-  const titleStyle = {
-    fontSize: '26px',
-    marginBottom: '25px',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#00ffff',
-    letterSpacing: '1px',
-  };
-
-  const infoBlock = {
-    marginBottom: '20px',
-    padding: '15px',
-    borderRadius: '8px',
-    backgroundColor: '#2b2b2b',
-    borderLeft: '4px solid #00ffff',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  };
-
-  const labelStyle = {
-    fontSize: '16px',
-    fontWeight: '600',
-    color: '#aaa',
-  };
-
-  const valueStyle = {
-    fontSize: '17px',
-    fontWeight: 'bold',
-    color: '#fff',
-  };
-
-  const statusStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    color: isActive ? '#4CAF50' : '#FF4C4C',
-    fontWeight: 'bold',
-    gap: '8px',
-    fontSize: '17px',
-    justifyContent: 'center',
-    marginTop: '10px',
-  };
-
-  const buttonStyle = {
-    backgroundColor: '#ff4444',
-    color: '#fff',
-    padding: '12px 20px',
-    border: 'none',
-    borderRadius: '8px',
-    marginTop: '25px',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    width: '100%',
-  };
-
-  const modalOverlay = {
-    position: 'fixed',
-    top: 0, left: 0,
-    width: '100vw',
-    height: '100vh',
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 10,
-  };
-
-  const modalStyle = {
-    backgroundColor: '#1e1e1e',
-    padding: '30px',
-    borderRadius: '12px',
-    boxShadow: '0 0 10px rgba(255, 255, 255, 0.1)',
-    width: '350px',
-    textAlign: 'center',
-    color: '#fff',
-    border: '1px solid #333',
-  };
-
-  const modalButtonStyle = {
-    backgroundColor: '#00ffff',
-    color: '#000',
-    padding: '10px 16px',
-    borderRadius: '6px',
-    border: 'none',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    marginTop: '20px',
-    marginRight: '10px',
-  };
-
-  const cancelModalButton = {
-    backgroundColor: '#ff4444',
-    color: '#fff',
-    padding: '10px 16px',
-    borderRadius: '6px',
-    border: 'none',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    marginTop: '20px',
+  const styles = {
+    container: {
+      backgroundColor: "#000",
+      color: "#fff",
+      minHeight: "100vh",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      fontFamily: "sans-serif",
+      padding: "20px",
+    },
+    card: {
+      backgroundColor: "#111",
+      padding: "40px",
+      borderRadius: "16px",
+      border: "1px solid #333",
+      width: "100%",
+      maxWidth: "480px",
+      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+    },
+    title: {
+      fontSize: "28px",
+      marginBottom: "20px",
+      fontWeight: "bold",
+      textAlign: "center",
+      color: "#fff",
+      textTransform: "uppercase",
+    },
+    infoBlock: {
+      marginBottom: "20px",
+      padding: "15px",
+      borderRadius: "8px",
+      backgroundColor: "#1a1a1a",
+      borderLeft: "4px solid #555",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    label: {
+      fontSize: "16px",
+      fontWeight: "600",
+      color: "#ccc",
+    },
+    value: {
+      fontSize: "17px",
+      fontWeight: "bold",
+      color: "#fff",
+      wordBreak: "break-word",
+    },
+    status: {
+      display: "flex",
+      alignItems: "center",
+      color: user.role === "subscriber" ? "#4CAF50" : "#FF6347", // green for active, red for inactive
+      fontWeight: "bold",
+      gap: "8px",
+      fontSize: "18px",
+      justifyContent: "center",
+      marginTop: "15px",
+    },
+    cancelBtn: {
+      backgroundColor: "#222",
+      color: "#fff",
+      padding: "14px 20px",
+      border: "1px solid #444",
+      borderRadius: "8px",
+      marginTop: "25px",
+      cursor: "pointer",
+      fontWeight: "bold",
+      width: "100%",
+      textAlign: "center",
+      transition: "background-color 0.3s ease",
+    },
+    cancelBtnHover: {
+      backgroundColor: "#333",
+    },
+    modalOverlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100vw",
+      height: "100vh",
+      backgroundColor: "rgba(0, 0, 0, 0.7)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 10,
+    },
+    modal: {
+      backgroundColor: "#111",
+      padding: "30px",
+      borderRadius: "12px",
+      width: "350px",
+      textAlign: "center",
+      color: "#fff",
+      border: "1px solid #333",
+    },
+    modalButton: {
+      backgroundColor: "#fff",
+      color: "#000",
+      padding: "10px 16px",
+      borderRadius: "6px",
+      border: "none",
+      cursor: "pointer",
+      fontWeight: "bold",
+      marginTop: "20px",
+      marginRight: "10px",
+      transition: "background-color 0.3s ease",
+    },
+    cancelModalButton: {
+      backgroundColor: "#333",
+      color: "#fff",
+      padding: "10px 16px",
+      borderRadius: "6px",
+      border: "1px solid #555",
+      cursor: "pointer",
+      fontWeight: "bold",
+      marginTop: "20px",
+      transition: "background-color 0.3s ease",
+    },
+    modalButtonHover: {
+      backgroundColor: "#ddd",
+    },
   };
 
   return (
-    <div style={containerStyle}>
-      <div style={cardStyle}>
-        <div style={titleStyle}>🌐 Subscription Info</div>
+    <div style={styles.container}>
+      <div style={styles.card}>
+        <div style={styles.title}>🖤 Subscription Info</div>
 
-        <div style={infoBlock}>
-          <span style={labelStyle}>Membership</span>
-          <span style={valueStyle}>
-            {subscription.isPremium ? 'Premium Member' : 'Free Member'}
+        <div style={styles.infoBlock}>
+          <span style={styles.label}>Membership</span>
+          <span style={styles.value}>
+            {user.role === "subscriber" ? "Premium Member" : "Free Member"}
           </span>
         </div>
 
-        <div style={infoBlock}>
-          <span style={labelStyle}>Start Date</span>
-          <span style={valueStyle}>
-            {new Date(subscription.subscriptionStart).toLocaleDateString()}
-          </span>
-        </div>
+        {user.role === "subscriber" && (
+          <>
+            <div style={styles.infoBlock}>
+              <span style={styles.label}>Start Date</span>
+              <span style={styles.value}>
+                {new Date(user.subscriptionStart).toLocaleString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })}
+              </span>
+            </div>
 
-        <div style={infoBlock}>
-          <span style={labelStyle}>End Date</span>
-          <span style={valueStyle}>
-            {new Date(subscription.subscriptionEnd).toLocaleDateString()}
-          </span>
-        </div>
+            <div style={styles.infoBlock}>
+              <span style={styles.label}>End Date</span>
+              <span style={styles.value}>
+                {new Date(user.subscriptionEnd).toLocaleString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })}
+              </span>
+            </div>
+          </>
+        )}
 
-        <div style={statusStyle}>
-          {isActive ? (
+        <div style={styles.status}>
+          {user.role === "subscriber" ? (
             <>
               <FiCheckCircle size={20} />
               Active Subscription
@@ -169,32 +202,47 @@ const SubscriptionDetail = () => {
           ) : (
             <>
               <FiXCircle size={20} />
-              Expired Subscription
+              Inactive Subscription
             </>
           )}
         </div>
 
-        <button style={buttonStyle} onClick={() => setShowModal(true)}>
-          Cancel Subscription
-        </button>
+        {user.role === "subscriber" && (
+          <button
+            style={styles.cancelBtn}
+            onClick={() => setShowModal(true)}
+            onMouseEnter={(e) => (e.target.style.backgroundColor = "#333")}
+            onMouseLeave={(e) => (e.target.style.backgroundColor = "#222")}
+          >
+            Cancel Subscription
+          </button>
+        )}
       </div>
 
       {/* Modal */}
       {showModal && (
-        <div style={modalOverlay}>
-          <div style={modalStyle}>
-            <h2>⚠️ Are you sure?</h2>
-            <p>This action <strong>cannot be reverted</strong>. Your subscription will be cancelled immediately.</p>
+        <div style={styles.modalOverlay}>
+          <div style={styles.modal}>
+            <h2>Are you sure?</h2>
+            <p>
+              This action <strong>cannot be undone</strong>. Your subscription
+              will be cancelled immediately.
+            </p>
             <div>
-              <button style={modalButtonStyle} onClick={() => setShowModal(false)}>
+              <button
+                style={styles.modalButton}
+                onClick={() => setShowModal(false)}
+              >
                 Go Back
               </button>
-              <button style={cancelModalButton} onClick={() => {
-                setShowModal(false);
-                // Perform cancellation logic here
-                alert('Subscription cancelled!');
-              }}>
-                Yes, Cancel It
+              <button
+                style={styles.cancelModalButton}
+                onClick={() => {
+                  setShowModal(false);
+                  handleCancelSubcription();
+                }}
+              >
+                {loading ? <ClipLoader color="#fff" /> : "Yes, Cancel It"}
               </button>
             </div>
           </div>

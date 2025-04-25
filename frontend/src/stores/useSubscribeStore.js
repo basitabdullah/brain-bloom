@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import axios from "../lib/axios";
-import { errorToast } from "../lib/toast";
+import { errorToast, successToast } from "../lib/toast";
+import { useUserStore } from "./useUserStore";
 
 export const useSubscriptionStore = create((set, get) => ({
   data: null,
@@ -16,6 +17,25 @@ export const useSubscriptionStore = create((set, get) => ({
     } catch (error) {
       errorToast(error.response?.data?.message || "Something went wrong");
       set({ loading: false });
+      return null;
+    }
+  },
+
+  cancelSubscription: async (id) => {
+    try {
+      set({ loading: true });
+
+      const res = await axios.put("/subscribe/cancel-subscription", { id });
+
+      successToast(res.data.message);
+
+      set({ loading: false });
+    } catch (error) {
+      errorToast(error.response?.data?.message || "Something went wrong");
+      console.log(error);
+
+      set({ loading: false });
+
       return null;
     }
   },

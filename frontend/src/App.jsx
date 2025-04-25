@@ -31,6 +31,7 @@ import SuccessPage from "./components/SuccessPage";
 import FailurePage from "./components/FailurePage";
 import Profile from "./pages/Profile";
 import SubDetails from "./pages/SubDetails";
+import Subscribe from "./pages/Subscribe";
 
 function App() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -78,6 +79,7 @@ function App() {
               <Route path="/success" element={<SuccessPage />} />
               <Route path="/failure" element={<FailurePage />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/subscribe" element={<Subscribe />} />
               <Route path="/subscription-detail" element={<SubDetails />} />
               <Route
                 path="/watch/:courseId"
@@ -85,7 +87,7 @@ function App() {
                   user && (user.role === "admin" || user.role === "subscriber") ? (
                     <VideoPlayerPage />
                   ) : (
-                    <Navigate to="/" />
+                    <Navigate to="/subscribe" />
                   )
                 }
               />

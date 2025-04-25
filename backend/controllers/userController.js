@@ -38,7 +38,10 @@ export const login = async (req, res) => {
   }
 
   //subscription check
-  if (user.role === "subscriber" && Date.now() > new Date(user.subscriptionEnd)) {
+  if (
+    user.role === "subscriber" &&
+    Date.now() > new Date(user.subscriptionEnd)
+  ) {
     user.role = "user";
     await user.save();
   }
@@ -129,7 +132,7 @@ export const getProfile = async (req, res) => {
   try {
     const user = req.user;
     if (!user) {
-     return  res.status(401).json({
+      return res.status(401).json({
         message: "User Not Found!",
       });
     }
@@ -137,6 +140,44 @@ export const getProfile = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       message: error.message,
+    });
+  }
+};
+
+export const updateUser = async (req, res) => {
+  try {
+    const { name, email, password, phone } = req.body;
+    const { id } = req.params;
+
+
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User Not Found!",
+      });
+    }
+
+    const updatedFields = {
+      name,
+      email,
+      phone,
+    };
+
+    if (password) {
+      const hashedPassword = await hashPassword(password);
+      updatedFields.password = hashedPassword;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(id, updatedFields, { new: true });
+
+    res.status(200).json({
+      message: "User Updated Successfully!",
+      user: updatedUser, 
+    });
+  } catch (error) {
+    console.error("Error while updating user:", error);
+    res.status(500).json({
+      message: "Something went wrong while updating the user.",
     });
   }
 };

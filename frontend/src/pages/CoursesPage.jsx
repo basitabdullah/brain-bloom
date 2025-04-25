@@ -5,6 +5,7 @@ import { useCourseStore } from "../stores/useCourseStore";
 import { useUserStore } from "../stores/useUserStore";
 import { errorToast } from "../lib/toast";
 import { FaLock } from "react-icons/fa";
+import { ClipLoader } from "react-spinners";
 
 const CoursesPage = () => {
   const [activeFilter, setActiveFilter] = useState("all");
@@ -19,7 +20,7 @@ const CoursesPage = () => {
       errorToast("You need to Subscribe first to get full access!");
     }
   };
- const handleLockClick = () => {
+  const handleLockClick = () => {
     errorToast("You need to login first!");
   };
   const filters = [
@@ -38,9 +39,22 @@ const CoursesPage = () => {
       ? courses
       : courses.filter((course) => course.category === activeFilter);
 
-  if (loading) {
-    return <div>loading courses...</div>;
-  }
+      if (loading) {
+        return (
+          <div
+            style={{
+              height: "100vh",
+              width: "100vw",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <ClipLoader color="#ffffff" />
+          </div>
+        );
+      }
+      
 
   return (
     <div className="courses-page">

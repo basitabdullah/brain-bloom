@@ -1,68 +1,37 @@
 import Razorpay from "razorpay";
 import User from "../models/userModel.js";
 import crypto from "crypto";
+import { log } from "console";
 
-export const subscribe = async (req, res) => {
+export const createSubscription = async (req, res) => {
   const instance = new Razorpay({
     key_id: process.env.RAZOR_PAY_KEY,
     key_secret: process.env.RAZOR_PAY_SECRET,
   });
 
   try {
-    const user = req.user;
+    const options = {
+      amount: 19900, // ₹199 in paise
+      currency: "INR",
+      receipt: `receipt_${Date.now()}`,
+    };
+    const subscription = await instance.orders.create(options);
 
-    if (!user) {
-      return res.status(401).json({ message: "User not found!" });
-    }
-
-    let razorpayCustomerId = user.razorpayCustomerId;
-
-    // ✅ Only create customer if not already created
-    if (!razorpayCustomerId) {
-      const customer = await instance.customers.create({
-        name: user.name,
-        email: user.email,
-        contact: user.phone,
-      });
-
-      razorpayCustomerId = customer.id;
-
-      // Save the customer ID in your database
-      await User.findByIdAndUpdate(user._id, {
-        razorpayCustomerId: razorpayCustomerId,
-      });
-    }
-
-    // ✅ Create subscription for that customer
-    const subscription = await instance.subscriptions.create({
-      plan_id: "plan_QKq0fOk1PKsnYz", // Replace with your real Plan ID
-      customer_notify: 1,
-      total_count: 1, // One billing cycle only (30 days for monthly)
-      customer_id: razorpayCustomerId,
-    });
-
-    return res.status(200).json({
-      message: "Subscription created successfully",
-      subscriptionId: subscription.id,
-      subscription,
-    });
+    res.json({ success: true, subscription });
   } catch (error) {
     console.error("Error in subscribe:", error);
-    return res.status(500).json({
-      message: "Failed to create subscription",
-      error: error.description || error.message,
-    });
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
 export const verifySubscription = async (req, res) => {
   const key_secret = process.env.RAZOR_PAY_SECRET;
 
-  const { razorpay_payment_id, razorpay_subscription_id, razorpay_signature } =
+  const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
     req.body;
   const generatedSigniture = crypto
     .createHmac("sha256", key_secret)
-    .update(`${razorpay_payment_id}|${razorpay_subscription_id}`)
+    .update(`${razorpay_order_id}|${razorpay_payment_id}`)
     .digest("hex");
 
   if (generatedSigniture !== razorpay_signature) {
@@ -76,13 +45,33 @@ export const verifySubscription = async (req, res) => {
     await User.findByIdAndUpdate(userId, {
       role: "subscriber",
       razorpayPaymentId: razorpay_payment_id,
-      razorpaySubscriptionId: razorpay_subscription_id,
+      razorpaySubscriptionId: razorpay_order_id,
       subscriptionStart: new Date(),
       subscriptionEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
     });
     return res.json({ success: true });
   } catch (error) {
     console.error("Verification error", error);
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+export const cancelSubscription = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const user = await User.findByIdAndUpdate(
+      id,
+      {
+        role: "user",
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "Membership canceled successfully!",
+      user,
+    });
+  } catch (error) {
     return res.status(500).json({ success: false, message: "Server error" });
   }
 };

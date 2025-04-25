@@ -51,11 +51,22 @@ export const useUserStore = create((set, get) => ({
     set({ checkingAuth: true });
     try {
       const res = await axios.get("auth/profile");
-      set({ checkingAuth: false, user: res.data});
-
+      set({ checkingAuth: false, user: res.data });
       successToast("Logged In Automatically!");
     } catch (error) {
       set({ checkingAuth: false });
+    }
+  },
+
+  updateUser: async (id, formData) => {
+    set({ loading: true });
+    try {
+      const res = await axios.put(`auth/${id}`, formData);
+      set({ user: res.data });
+      set({ loading: false });
+    } catch (error) {
+      set({ loading: false });
+      errorToast(error.response.data.message);
     }
   },
 }));
