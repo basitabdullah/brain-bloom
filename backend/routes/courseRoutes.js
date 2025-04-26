@@ -1,19 +1,21 @@
-import express from "express"
-import { createCourse, getAllPremiumCourses,getAllCourses, updateCourse, deleteCourse, getSingleCourse } from "../controllers/courseController.js"
+import express from "express";
+import {
+  createCourse,
+  getAllPremiumCourses,
+  getAllCourses,
+  updateCourse,
+  deleteCourse,
+  getSingleCourse,
+} from "../controllers/courseController.js";
+import { isAdmin, isLoggedIn } from "../middlewares/authMiddleware.js";
+const router = express.Router();
 
-const router = express.Router()
+router.get("/premium", isLoggedIn, isAdmin, getAllPremiumCourses);
+router.get("/", getAllCourses);
+router.get("/:id", getSingleCourse);
 
+router.post("/", isLoggedIn, isAdmin, createCourse);
+router.put("/:id", isLoggedIn, isAdmin, updateCourse);
+router.delete("/:id", isLoggedIn, isAdmin, deleteCourse);
 
-router.get("/premium",getAllPremiumCourses)
-router.get("/",getAllCourses)
-router.get("/:id",getSingleCourse)
-
-router.post("/",createCourse)
-router.put("/:id",updateCourse)
-router.delete("/:id",deleteCourse)
-
-
-
-
-export default router
-
+export default router;

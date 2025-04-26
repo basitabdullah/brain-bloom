@@ -6,6 +6,7 @@ export const useUserStore = create((set, get) => ({
   loading: false,
   checkingAuth: false,
   subscriber: null,
+  users : null,
 
   login: async ({ email, password }) => {
     set({ loading: true });
@@ -63,6 +64,18 @@ export const useUserStore = create((set, get) => ({
     try {
       const res = await axios.put(`auth/${id}`, formData);
       set({ user: res.data });
+      set({ loading: false });
+    } catch (error) {
+      set({ loading: false });
+      errorToast(error.response.data.message);
+    }
+  },
+
+  getAllUsers: async () => {
+    set({ loading: true });
+    try {
+      const res = await axios.get(`auth/allusers`);
+      set({ users: res.data });
       set({ loading: false });
     } catch (error) {
       set({ loading: false });

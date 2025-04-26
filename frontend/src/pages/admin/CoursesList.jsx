@@ -1,26 +1,33 @@
 import React, { useEffect } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useCourseStore } from "../../stores/useCourseStore";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 const CoursesList = () => {
-  const { loading, courses, getAllPremiumCourses,deleteCourse } = useCourseStore();
+  const { loading, courses, getAllPremiumCourses, deleteCourse } =
+    useCourseStore();
 
   useEffect(() => {
     getAllPremiumCourses();
   }, [getAllPremiumCourses]);
 
- 
-
-  const handleCourseDelete = async (id)=>{
-    await deleteCourse(id)
-    await getAllPremiumCourses()
-  }
-  
-
+  const handleCourseDelete = async (id) => {
+    await deleteCourse(id);
+    await getAllPremiumCourses();
+  };
 
   return loading ? (
-    <div className="loading">Loading...</div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <ClipLoader color="#fff" />
+    </div>
   ) : (
     <div className="admin-courses">
       <div className="admin-courses__header">
@@ -33,10 +40,6 @@ const CoursesList = () => {
           <div className="stat-card">
             <h3>Active Courses</h3>
             <p>{courses?.length || 0}</p>
-          </div>
-          <div className="stat-card">
-            <h3>Total Students</h3>
-            <p>0</p>
           </div>
         </div>
       </div>
@@ -61,10 +64,18 @@ const CoursesList = () => {
                 <td>{course.rating ?? "Not Rated"}</td>
                 <td>
                   <div className="action-buttons">
-                    <Link to={`/admin/update-course/${course._id}`}  className="btn-icon" title="Edit">
+                    <Link
+                      to={`/admin/update-course/${course._id}`}
+                      className="btn-icon"
+                      title="Edit"
+                    >
                       <FaEdit />
                     </Link>
-                    <button onClick={()=>handleCourseDelete(course._id)} className="btn-icon" title="Delete">
+                    <button
+                      onClick={() => handleCourseDelete(course._id)}
+                      className="btn-icon"
+                      title="Delete"
+                    >
                       <FaTrash />
                     </button>
                   </div>

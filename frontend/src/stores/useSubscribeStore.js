@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import axios from "../lib/axios";
 import { errorToast, successToast } from "../lib/toast";
-import { useUserStore } from "./useUserStore";
 
 export const useSubscriptionStore = create((set, get) => ({
   data: null,

@@ -2769,7 +2769,6 @@ p {
   padding: 2rem;
   background-color: #121212;
   min-height: 100vh;
-  margin-top: 80px;
 
   &__header {
     text-align: center;
@@ -2975,7 +2974,6 @@ p {
 .admin-layout {
   display: flex;
   min-height: 100vh;
-  margin-top: 80px; // Account for fixed header
 
   &__sidebar {
     width: 250px;

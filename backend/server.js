@@ -6,6 +6,7 @@ import { connectDb } from "./libs/connectDb.js";
 import userRoutes from "./routes/userRoutes.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import subscribeRoutes from "./routes/subscribeRoutes.js";
+import mailerRoutes from "./routes/mailerRoutes.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use("/api/auth", userRoutes);
 app.use("/api/course" ,courseRoutes)
 app.use("/api/subscribe" ,subscribeRoutes)
+app.use("/api/mail" ,mailerRoutes)
 
 app.get("/abyss-list", async (req, res) => {
   try {

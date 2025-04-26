@@ -24,3 +24,20 @@ export const isLoggedIn = async (req, res, next) => {
     res.status(401).json({ message: error.message });
   }
 };
+
+export const isAdmin = async(req,res,next)=>{
+  try {
+      const user = req.user
+      
+      if(user.role === "admin"){
+          return next()
+      }else{
+          return res.status(401).json({
+              message : "Not authorized,only admins can access this route!"
+          })
+      }
+  } catch (error) {
+      res.status(401).json({ message: error.message });
+      
+  }
+  }

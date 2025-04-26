@@ -93,8 +93,14 @@ const CoursesPage = () => {
                 </p>
 
                 <div className="courses-page__card-details">
-                  <span>{course.duration}</span>
-                  <span>{course.level}</span>
+                  <span>Duration {course.duration}/hrs</span>
+                  <span style={{
+                    textTransform : "capitalize",
+                    backgroundColor :"#000",
+                    color : "white",
+                    padding:"3px 10px",
+                    borderRadius : "20px"
+                  }}>{course.level}</span>
                 </div>
 
                 <div className="courses-page__card-instructor">
