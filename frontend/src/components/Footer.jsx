@@ -38,13 +38,15 @@ const Footer = () => {
               <li><Link to="/faq">FAQ</Link></li>
               <li><Link to="/contact">Support</Link></li>
               <li><Link to="/terms">Terms of Service</Link></li>
+              <li><Link to="/privacy">Privacy Policy</Link></li>
             </ul>
           </div>
           
           <div className="footer__contact">
             <h3>Contact Us</h3>
-            <p>Email: info@brainbloom.com</p>
-            <p>Address: India</p>
+            <p>Email: info.brainbloom@gmail.com</p>
+            <p>Address: Gaviopuram Extension 560019 Bangalore, India</p>
+
           </div>
         </div>
         

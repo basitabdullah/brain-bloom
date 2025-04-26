@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaCrown } from "react-icons/fa";
+import { FaCrown, FaRegUserCircle } from "react-icons/fa";
 import { GiBrain } from "react-icons/gi";
 import ShinyText from "../../animatedTexts/ShinyText/ShinyText";
 import { useUserStore } from "../stores/useUserStore";
 import { FaUser, FaCog } from "react-icons/fa";
-import {ClipLoader} from "react-spinners"
+import { MdLogout } from "react-icons/md";
 const Header = ({ onSignupClick, onSubscriptionClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -24,8 +24,6 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  
 
   return (
     <header className={`header ${isScrolled ? "scrolled" : ""}`}>
@@ -82,6 +80,7 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
                 </a>
               </li>
             )}
+
             {user && (
               <>
                 <li className="mobile-auth-link">
@@ -92,9 +91,81 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
                       logout();
                       setIsMobileMenuOpen(false);
                     }}
+                    style={{
+                      cursor: "pointer",
+                      margin: 0,
+                      padding: "0.5rem 0",
+                      fontSize: "1.3rem",
+                      fontWeight: "500",
+                      display: "flex",
+                      alignItems: "center",
+                      gap:"3px"
+                    }}
                   >
+                    <MdLogout size={22}/>
                     Logout
                   </a>
+
+                  {user && (
+                    <div style={{ color: "#fff" }}>
+                      <p
+                        onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                        style={{
+                          cursor: "pointer",
+                          margin: 0,
+                          padding: "0.5rem 0",
+                          fontSize: "1.3rem",
+                          fontWeight: "500",
+                          display: "flex",
+                          alignItems: "center",
+                          gap:"3px"
+                        }}
+                      >
+                       <FaRegUserCircle /> Profile
+                      </p>
+
+                      {isProfileMenuOpen && (
+                        <div style={{ paddingLeft: "1rem" }}>
+                          <p
+                            style={{
+                              margin: "0.25rem 0",
+                              display: "flex",
+                              alignItems: "center",
+                              backgroundColor: "#000",
+                              padding: "3px 8px",
+                              borderRadius: "10px",
+                            }}
+                          >
+                            {">"} <FaUser style={{ marginRight: "0.5rem" }} />
+                            <Link
+                              to="/profile"
+                              style={{ color: "#fff", textDecoration: "none" }}
+                            >
+                              Profile
+                            </Link>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0.25rem 0",
+                              display: "flex",
+                              alignItems: "center",
+                              backgroundColor: "#000",
+                              padding: "3px 8px",
+                              borderRadius: "10px",
+                            }}
+                          >
+                            {">"} <FaCog style={{ marginRight: "0.5rem" }} />
+                            <Link
+                              to="/subscription-detail"
+                              style={{ color: "#fff", textDecoration: "none" }}
+                            >
+                              Subscription
+                            </Link>
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </li>
                 {user.role === "user" && (
                   <li className="mobile-auth-link">

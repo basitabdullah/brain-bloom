@@ -128,7 +128,7 @@ const TermsAndServices = () => {
           </section>
           
           <div className="terms-contact">
-            <p>For any questions, feel free to <a href="/contact" className="terms-contact__link">contact us</a>.</p>
+            <p>For any questions, feel free to <a href="#/contact" className="terms-contact__link">contact us</a>.</p>
           </div>
         </div>
       </div>

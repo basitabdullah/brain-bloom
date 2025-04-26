@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   Navigate,
@@ -32,6 +32,7 @@ import FailurePage from "./components/FailurePage";
 import Profile from "./pages/Profile";
 import SubDetails from "./pages/SubDetails";
 import Subscribe from "./pages/Subscribe";
+import Privacy from "./components/Privacy";
 
 function App() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -76,6 +77,7 @@ function App() {
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/terms" element={<TearmsAndServices />} />
+              <Route path="/privacy" element={<Privacy />} />
               <Route path="/success" element={<SuccessPage />} />
               <Route path="/failure" element={<FailurePage />} />
               <Route path="/profile" element={<Profile />} />

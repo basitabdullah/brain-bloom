@@ -4,12 +4,15 @@ import {
   FaArrowLeft,
   FaExpand,
   FaCompress,
-  FaDownload,
-  FaHeart,
-  FaRegHeart,
+  // FaDownload,
+  // FaHeart,
+  // FaRegHeart,
   FaShare,
+  FaPlay 
+
 } from "react-icons/fa";
 import { useCourseStore } from "../stores/useCourseStore";
+import { successToast } from "../lib/toast";
 
 const VideoPlayerPage = () => {
   const { courseId } = useParams();
@@ -54,9 +57,20 @@ const VideoPlayerPage = () => {
     navigate(-1);
   };
 
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
+  const handleShare = () => {
+    navigator.clipboard
+      .writeText(window.location.origin)
+      .then(() => {
+        successToast("Link copied to clipboard!")
+      })
+      .catch((err) => {
+        errorToast("Failed to copy!")
+      });
   };
+
+  // const toggleFavorite = () => {
+  //   setIsFavorite(!isFavorite);
+  // };
 
   if (loading) {
     return (
@@ -83,9 +97,9 @@ const VideoPlayerPage = () => {
     );
   }
 
-  const handleChangeVideo = (link)=>{
-   setSelectedVideo(link)
-  }
+  const handleChangeVideo = (link) => {
+    setSelectedVideo(link);
+  };
 
   return (
     <div className="video-player">
@@ -128,7 +142,7 @@ const VideoPlayerPage = () => {
             </div>
 
             <div className="video-player__actions">
-              <div className="video-player__action-buttons">
+              {/* <div className="video-player__action-buttons">
                 <button
                   className={`btn btn--icon ${isFavorite ? "active" : ""}`}
                   onClick={toggleFavorite}
@@ -144,29 +158,29 @@ const VideoPlayerPage = () => {
                   <FaDownload />
                   <span>Download</span>
                 </button>
+              
+              </div> */}
 
-                <button className="btn btn--icon" title="Share Video">
+              <div className="video-player__stats ">
+                <button
+                  className="btn btn--icon"
+                  title="Share Video"
+                  onClick={handleShare}
+                >
                   <FaShare />
                   <span>Share</span>
                 </button>
-              </div>
-
-              <div className="video-player__stats ">
                 <span className="duration-badge">
                   {singleCourse.duration}/hour course
                 </span>
-                <span className="level-badge">
-                {singleCourse.level}
-                </span>
-                <span className="rating-badge">
-                {singleCourse.rating} ⭐
-                </span>
+                <span className="level-badge">{singleCourse.level}</span>
+                <span className="rating-badge">{singleCourse.rating} ⭐</span>
               </div>
             </div>
 
             <div className="video-player__info">
               <div className="video-player__video-title">
-                <h2>{singleCourse.title}</h2> 
+                <h2>{singleCourse.title}</h2>
               </div>
 
               <div className="video-player__instructor">
@@ -193,14 +207,18 @@ const VideoPlayerPage = () => {
             <div className="video-player__playlist-header">
               <h3 className="video-player__playlist-title">Premium Videos</h3>
               <span className="video-player__playlist-count">
-              {singleCourse.abyssLinks.length}
-
+                {singleCourse.abyssLinks.length}
               </span>
             </div>
 
             <div className="video-player__playlist-items">
-               {singleCourse.abyssLinks.map((e,i) => {
-                return <button className="item-button" onClick={()=>handleChangeVideo(e)}>{`${singleCourse.title} Lecture ${i+1}`}</button>;
+              {singleCourse.abyssLinks.map((e, i) => {
+                return (
+                  <button
+                    className="item-button"
+                    onClick={() => handleChangeVideo(e)}
+                  ><FaPlay/>{`${singleCourse.title} Lecture ${i + 1}`}</button>
+                );
               })}
             </div>
 

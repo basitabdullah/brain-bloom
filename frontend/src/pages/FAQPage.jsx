@@ -43,7 +43,7 @@ const FAQPage = () => {
     },
     {
       question: "Can I use the platform on mobile devices?",
-      answer: "Yes, our platform is fully optimized for both desktop and mobile devices. You can access the platform through your web browser or by downloading our mobile app from the App Store or Google Play."
+      answer: "Yes, our platform is fully optimized for both desktop and mobile devices. You can access the platform through your web browser on any device mobile or a desktop."
     }
   ];
 
@@ -84,7 +84,7 @@ const FAQPage = () => {
           
           <div className="faq-page__cta">
             <p>Still have questions?</p>
-            <a href="/contact" className="btn btn--primary">Contact Us</a>
+            <a href="#/contact" className="btn btn--primary">Contact Us</a>
           </div>
         </div>
       </div>
