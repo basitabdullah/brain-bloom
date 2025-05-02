@@ -1,19 +1,45 @@
-import React, { useEffect } from "react";
-import { FaUser, FaUserSlash, FaUserCheck } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaUser } from "react-icons/fa";
 import { useUserStore } from "../../stores/useUserStore";
 import { ClipLoader } from "react-spinners";
 
 const UsersManagement = () => {
   const { users, getAllUsers, loading } = useUserStore();
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedRole, setSelectedRole] = useState("all");
 
   useEffect(() => {
     getAllUsers();
   }, []);
 
+  useEffect(() => {
+    if (users) {
+      setFilteredUsers(users);
+    }
+  }, [users]);
+
   const handleClick = (role) => {
-    const filteredUsers = users.filter((user) => user.role === role);
-    return filteredUsers;
+    setSelectedRole(role);
+    if (users) {
+      if (role === "all") {
+        setFilteredUsers(users);
+      } else {
+        const filtered = users.filter((user) => user.role === role);
+        setFilteredUsers(filtered);
+      }
+    }
   };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const displayedUsers = filteredUsers.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) || //includes checks for any portion that matches like im in fahim
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (!users || loading) {
     return (
@@ -39,10 +65,6 @@ const UsersManagement = () => {
             <h3>Total Users</h3>
             <p>{users.length}</p>
           </div>
-          {/* <div className="stat-card">
-            <h3>Active Users</h3>
-            <p>{users.filter(user => user.status === "Active").length}</p>
-          </div> */}
           <div className="stat-card">
             <h3>Admins</h3>
             <p>{users.filter((user) => user.role === "admin").length}</p>
@@ -52,27 +74,23 @@ const UsersManagement = () => {
 
       <div className="admin-users__filters">
         <div className="search-box">
-          <input type="text" placeholder="Search users..." />
+          <input
+            type="text"
+            placeholder="Search users..."
+            value={searchTerm}
+            onChange={handleSearch}
+          />
         </div>
         <div className="filter-buttons">
-          <button
-            className="filter-btn active"
-            onClick={() => handleClick("All")}
-          >
-            All
-          </button>
-          <button className="filter-btn" onClick={() => handleClick("user")}>
-            Users
-          </button>
-          <button className="filter-btn" onClick={() => handleClick("admin")}>
-            Admins
-          </button>
-          <button
-            className="filter-btn"
-            onClick={() => handleClick("subscriber")}
-          >
-            Subscribers
-          </button>
+          {["all", "user", "admin", "subscriber"].map((role) => (
+            <button
+              key={role}
+              className={`filter-btn ${selectedRole === role ? "active" : ""}`}
+              onClick={() => handleClick(role)}
+            >
+              {role.charAt(0).toUpperCase() + role.slice(1)}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -87,20 +105,18 @@ const UsersManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
-              <tr
-                style={{
-                  width: "80vw",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <ClipLoader color="#fff" size={12} />
+            {displayedUsers.length === 0 ? (
+              <tr>
+                <td
+                  colSpan="4"
+                  style={{ textAlign: "center", padding: "20px" }}
+                >
+                  No users found.
+                </td>
               </tr>
             ) : (
-              users.map((user) => (
-                <tr key={user.id}>
+              displayedUsers.map((user) => (
+                <tr key={user._id}>
                   <td>
                     <div className="user-info">
                       <div className="user-avatar">
@@ -111,7 +127,6 @@ const UsersManagement = () => {
                   </td>
                   <td>{user.email}</td>
                   <td>{user.role}</td>
-
                   <td>
                     <div className="action-buttons">
                       <button className="btn-icon" title="View Profile">

@@ -27,17 +27,17 @@ app.use("/api/course" ,courseRoutes)
 app.use("/api/subscribe" ,subscribeRoutes)
 app.use("/api/mail" ,mailerRoutes)
 
-app.get("/abyss-list", async (req, res) => {
-  try {
-    const response = await axios.get(
-      "https://api.hydrax.net/07a8dfa8fce3b110fc94797e345f83a6/list"
-    );
-    res.json(response.data);
-  } catch (error) {
-    console.error("Error fetching from Hydrax:", error.message);
-    res.status(500).json({ error: "Failed to fetch data" });
-  }
-});
+// app.get("/abyss-list", async (req, res) => {
+//   try {
+//     const response = await axios.get(
+//       "https://api.hydrax.net/07a8dfa8fce3b110fc94797e345f83a6/list"
+//     );
+//     res.json(response.data);
+//   } catch (error) {
+//     console.error("Error fetching from Hydrax:", error.message);
+//     res.status(500).json({ error: "Failed to fetch data" });
+//   }
+// });
 app.get("/", (req, res) => {
   res.send("Backend is Running!");
 });

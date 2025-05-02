@@ -20,12 +20,12 @@ import TearmsAndServices from "./components/TearmsAndServices";
 import ScrollToTop from "./components/ScrollToTop";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
-import AdminLayout from './components/AdminLayout';
-import CoursesList from './pages/admin/CoursesList';
-import AddCourse from './pages/admin/AddCourse';
-import UsersManagement from './pages/admin/UsersManagement';
-import Payments from './pages/admin/Payments';
-import AppLayout from './components/AppLayout';
+import AdminLayout from "./components/AdminLayout";
+import CoursesList from "./pages/admin/CoursesList";
+import AddCourse from "./pages/admin/AddCourse";
+import UsersManagement from "./pages/admin/UsersManagement";
+import Payments from "./pages/admin/Payments";
+import AppLayout from "./components/AppLayout";
 import UpdateCourse from "./pages/admin/UpdateCourse";
 import SuccessPage from "./components/SuccessPage";
 import FailurePage from "./components/FailurePage";
@@ -71,7 +71,7 @@ function App() {
           <ScrollToTop>
             <Toaster position="bottom-right" reverseOrder={false} />
             <Routes>
-              <Route path="/"  element={<HomePage />} />
+              <Route path="/" element={<HomePage />} />
               <Route path="/courses" element={<CoursesPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/contact" element={<ContactPage />} />
@@ -83,24 +83,33 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/subscribe" element={<Subscribe />} />
               <Route path="/subscription-detail" element={<SubDetails />} />
+
               <Route
                 path="/watch/:courseId"
                 element={
-                  user && (user.role === "admin" || user.role === "subscriber") ? (
+                  user &&
+                  (user.role === "admin" || user.role === "subscriber") ? (
                     <VideoPlayerPage />
                   ) : (
                     <Navigate to="/subscribe" />
                   )
                 }
               />
-              <Route path="/admin" element={
-                  user && (user.role === "admin" || user.role === "subscriber") ? (
+              <Route
+                path="/admin"
+                element={
+                  user &&
+                  (user.role === "admin" || user.role === "subscriber") ? (
                     <AdminLayout />
                   ) : (
                     <Navigate to="/" />
                   )
-                }>
-                <Route index element={<Navigate to="/admin/courses" replace />} />
+                }
+              >
+                <Route
+                  index
+                  element={<Navigate to="/admin/courses" replace />}
+                />
                 <Route path="courses" element={<CoursesList />} />
                 <Route path="add-course" element={<AddCourse />} />
                 <Route path="update-course/:id" element={<UpdateCourse />} />

@@ -89,7 +89,6 @@ export const updateCourse = async (req, res) => {
     youtubeLink,
     abyssLinks,
   } = req.body;
-  console.log(req.body);
   try {
     const course = await Course.findById(id);
 

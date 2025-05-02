@@ -99,10 +99,10 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
                       fontWeight: "500",
                       display: "flex",
                       alignItems: "center",
-                      gap:"3px"
+                      gap: "3px",
                     }}
                   >
-                    <MdLogout size={22}/>
+                    <MdLogout size={22} />
                     Logout
                   </a>
 
@@ -118,10 +118,10 @@ const Header = ({ onSignupClick, onSubscriptionClick }) => {
                           fontWeight: "500",
                           display: "flex",
                           alignItems: "center",
-                          gap:"3px"
+                          gap: "3px",
                         }}
                       >
-                       <FaRegUserCircle /> Profile
+                        <FaRegUserCircle /> Profile
                       </p>
 
                       {isProfileMenuOpen && (

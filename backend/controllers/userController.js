@@ -36,6 +36,13 @@ export const login = async (req, res) => {
       message: "User not found!",
     });
   }
+  if (!user.verified) {
+    res.status(500).json({
+      message:
+        "Unauthorized, User's Email Address Is Not Verified! Try Registering Again! ",
+    });
+    return await user.deleteOne();
+  }
 
   //subscription check
   if (
@@ -80,7 +87,9 @@ export const register = async (req, res) => {
       password: hashedPassword,
       phone,
     });
+
     const token = await generateJwtToken(user._id);
+    await setCookies(res, token);
 
     // res.cookie("jwtAccessToken", token, {
     //   httpOnly: true,
@@ -88,8 +97,6 @@ export const register = async (req, res) => {
     //   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
     //   sameSite: "None",
     // });
-    //instaed of this you can make a function
-    await setCookies(res, token);
     res.status(200).json({
       message: "User Created Successfully!",
       user,
@@ -149,7 +156,6 @@ export const updateUser = async (req, res) => {
     const { name, email, password, phone } = req.body;
     const { id } = req.params;
 
-
     const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({
@@ -168,11 +174,13 @@ export const updateUser = async (req, res) => {
       updatedFields.password = hashedPassword;
     }
 
-    const updatedUser = await User.findByIdAndUpdate(id, updatedFields, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(id, updatedFields, {
+      new: true,
+    });
 
     res.status(200).json({
       message: "User Updated Successfully!",
-      user: updatedUser, 
+      user: updatedUser,
     });
   } catch (error) {
     console.error("Error while updating user:", error);
