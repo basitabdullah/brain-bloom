@@ -10,7 +10,6 @@ export const useCourseStore = create((set, get) => ({
   createCourse: async ({ courseData }) => {
     try {
       const res = await axios.post("/course", courseData);
-      set({ courses: res.data });
       successToast(res.data.message);
     } catch (error) {
       errorToast(error.response.data.message);
@@ -21,7 +20,7 @@ export const useCourseStore = create((set, get) => ({
     try {
       const res = await axios.get("/course/premium");
 
-      set({ courses: res.data.courses,loading: false });
+      set({ courses: res.data.courses, loading: false });
     } catch (error) {
       errorToast(error.response.data.message);
       set({ loading: false });

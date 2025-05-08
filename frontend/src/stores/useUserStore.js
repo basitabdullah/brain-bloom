@@ -6,7 +6,7 @@ export const useUserStore = create((set, get) => ({
   loading: false,
   checkingAuth: false,
   subscriber: null,
-  users : null,
+  users: null,
 
   login: async ({ email, password }) => {
     set({ loading: true });
@@ -33,6 +33,7 @@ export const useUserStore = create((set, get) => ({
 
       set({ user: res.data.user });
       successToast(res.data.message);
+      return res.data.message;
     } catch (error) {
       errorToast(error.response.data.message);
       console.log(error);

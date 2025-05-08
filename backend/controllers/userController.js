@@ -189,3 +189,31 @@ export const updateUser = async (req, res) => {
     });
   }
 };
+
+export const resetPassword = async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+  try {
+    const user = await User.findOne({
+      resetToken: token,
+      resetTokenExpiry: { $gt: Date.now() },
+    });
+
+    if (!user) return res.status(400).json({ msg: "Invalid or expired token" });
+
+    if (password) {
+      const hashedPassword = await hashPassword(password);
+      user.password = hashedPassword;
+      user.resetToken = undefined;
+      user.resetTokenExpiry = undefined;
+      await user.save();
+    }
+
+    res.json({ msg: "Password has been reset" });
+  } catch (error) {
+    console.error("Error while reseting password:", error);
+    res.status(500).json({
+      message: "Something went wrong while reseting password.",
+    });
+  }
+};

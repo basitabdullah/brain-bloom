@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUserStore } from "../stores/useUserStore";
 import { useMailerStore } from "../stores/useMailerStore";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // 👁️ Import icons
 
 const SignupModal = ({ isOpen, onClose, onLoginClick }) => {
   const [name, setName] = useState("");
@@ -11,43 +12,50 @@ const SignupModal = ({ isOpen, onClose, onLoginClick }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [emailModalOpen, setEmailModalOpen] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const { register } = useUserStore();
-  const {loading,verifyMail} = useMailerStore()
+  const { loading, verifyMail } = useMailerStore();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name || !email || !password || !phone || !confirmPassword) {
       setError("Please fill in all fields");
       return;
     }
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError("Passwords do not match!");
       return;
     }
-
-    register({ name, email, password, phone });
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long!");
+      return;
+    }
+    const res = await register({ name, email, password, phone });
 
     setError("");
-    setEmailModalOpen(true); // 🔄 Open email verification modal
+    if (res) {
+      setEmailModalOpen(true);
+    }
   };
 
   const handleLoginClick = (e) => {
     e.preventDefault();
-    onClose(); // Close signup modal
-    onLoginClick(); // Open login modal
+    onClose();
+    onLoginClick();
   };
 
   const handleEmailModalClose = () => {
     setEmailModalOpen(false);
-    onClose(); // Optionally close everything
+    onClose();
   };
 
+  const handleVerifyEmail = async () => {
+    verifyMail(email);
+    handleEmailModalClose();
+  };
 
-  const handleVerifyEmail = async()=>{
-    verifyMail(email)
-    handleEmailModalClose()
-  }
   return (
     <>
       {/* Main Sign Up Modal */}
@@ -67,6 +75,9 @@ const SignupModal = ({ isOpen, onClose, onLoginClick }) => {
               exit={{ scale: 0.5, opacity: 0 }}
               transition={{ type: "spring", duration: 0.5 }}
               onClick={(e) => e.stopPropagation()}
+              style={
+                error ? {border : "2px dotted red"} : ""
+              }
             >
               <button className="modal__close" onClick={onClose}>
                 ×
@@ -104,26 +115,53 @@ const SignupModal = ({ isOpen, onClose, onLoginClick }) => {
                     required
                   />
                 </div>
-                <div className="modal__form-group">
+
+                {/* Password Field with Eye Icon */}
+                <div className="modal__form-group" style={{ position: "relative" }}>
                   <label htmlFor="password">Password</label>
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
+                  <span
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      top: "42px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </span>
                 </div>
-                <div className="modal__form-group">
+
+                {/* Confirm Password Field with Eye Icon */}
+                <div className="modal__form-group" style={{ position: "relative" }}>
                   <label htmlFor="confirmPassword">Confirm Password</label>
                   <input
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     id="confirmPassword"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                   />
+                  <span
+                    onClick={() => setShowConfirmPassword((prev) => !prev)}
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      top: "42px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                  </span>
                 </div>
+
                 <button type="submit" className="btn btn--primary">
                   Create Account
                 </button>
@@ -147,7 +185,6 @@ const SignupModal = ({ isOpen, onClose, onLoginClick }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            // onClick={handleEmailModalClose}
           >
             <motion.div
               className="modal"
@@ -157,18 +194,16 @@ const SignupModal = ({ isOpen, onClose, onLoginClick }) => {
               transition={{ type: "spring", duration: 0.5 }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* <button className="modal__close" onClick={handleEmailModalClose}>
-                ×
-              </button> */}
               <h3>Verify your email</h3>
-              <p style={{
-                fontSize:"10px",
-                color :"red"
-              }}>*If you do not verify your email now your account will be terminated on next login.</p>
+              <p style={{ fontSize: "10px", color: "red" }}>
+                *If you do not verify your email now your account will be
+                terminated on next login.
+              </p>
               <p>We sent a verification email to :</p>
               <input
                 style={{
                   marginRight: "10px",
+                  marginBottom: "10px",
                   padding: "14px",
                   fontSize: "0.85rem",
                   width: "70%",
@@ -182,7 +217,9 @@ const SignupModal = ({ isOpen, onClose, onLoginClick }) => {
                 readOnly
                 value={email}
               />
-              <button className="btn btn--primary" onClick={handleVerifyEmail}>{loading ? "sending": "Verify Email"}</button>
+              <button className="btn btn--primary" onClick={handleVerifyEmail}>
+                {loading ? "sending" : "Verify Email"}
+              </button>
             </motion.div>
           </motion.div>
         )}

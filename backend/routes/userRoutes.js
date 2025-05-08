@@ -4,6 +4,7 @@ import {
   login,
   logout,
   register,
+  resetPassword,
   updateUser,
 } from "../controllers/userController.js";
 import { Router } from "express";
@@ -19,5 +20,6 @@ router.post("/logout", logout);
 router.get("/allusers",isLoggedIn,isAdmin, allUsers);
 router.put("/:id",isLoggedIn, updateUser);
 router.get("/profile", isLoggedIn, getProfile);
+router.post("/reset-password/:token", resetPassword);
 
 export default router;

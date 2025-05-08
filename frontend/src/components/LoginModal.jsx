@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUserStore } from "../stores/useUserStore";
+import { Link } from "react-router-dom";
 
 const LoginModal = ({ isOpen, onClose, onSignupClick }) => {
   const [email, setEmail] = useState("");
@@ -97,9 +98,7 @@ const LoginModal = ({ isOpen, onClose, onSignupClick }) => {
               </a>
             </p>
             <p className="modal__forgot-password">
-              <a href="#" onClick={(e) => e.preventDefault()}>
-                Forgot Password?
-              </a>
+              <Link to="/forgot-password" onClick={()=>onClose()}>Forgot Password?</Link>
             </p>
           </div>
         </motion.div>

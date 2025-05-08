@@ -24,37 +24,42 @@ const CoursesPage = () => {
     errorToast("You need to login first!");
   };
   const filters = [
-    { id: "all", name: "All Courses" },
     { id: "development", name: "Development" },
-    { id: "science", name: "Science" },
-    { id: "political-science", name: "Political-science" },
-    { id: "language", name: "Language" },
-    { id: "reasoning", name: "Reasoning" },
-    { id: "commerce", name: "Commerce" },
-    { id: "advance", name: "Advance" },
-  ];
+    { id: "business", name: "Business" },
+    { id: "finance-accounting", name: "Finance & Accounting" },
+    { id: "it-software", name: "IT & Software" },
+    { id: "network", name: "Network" },
+    { id: "ai", name: "AI" },
+    { id: "hardware-electronics", name: "Hardware & Electronics" },
+    { id: "game-development", name: "Game Development" },
+    { id: "science-engineering", name: "Science & Engineering" },
+    { id: "personal-development", name: "Personal Development" },
+    { id: "workout-diet", name: "Workout and Diet" },
+    { id: "sales-marketing", name: "Sales & Marketing" },
+    { id: "language-learning", name: "Language Learning" },
+    { id: "design-art", name: "Design & Art" }
+  ]
 
   const filteredCourses =
     activeFilter === "all"
       ? courses
       : courses.filter((course) => course.category === activeFilter);
 
-      if (loading) {
-        return (
-          <div
-            style={{
-              height: "100vh",
-              width: "100vw",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <ClipLoader color="#ffffff" />
-          </div>
-        );
-      }
-      
+  if (loading) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          width: "100vw",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <ClipLoader color="#ffffff" />
+      </div>
+    );
+  }
 
   return (
     <div className="courses-page">
@@ -76,66 +81,77 @@ const CoursesPage = () => {
         </div>
 
         <div className="courses-page__grid">
-          {filteredCourses?.map((course) => (
-            <div key={course._id} className="courses-page__card">
-              <img
-                src={course.image}
-                alt={course.title}
-                className="courses-page__card-image"
-              />
-              <div className="courses-page__card-content">
-                <span className="courses-page__card-category">
-                  {course.category}
-                </span>
-                <h3 className="courses-page__card-title">{course.title}</h3>
-                <p className="courses-page__card-description">
-                  {course.description}
-                </p>
+          {filteredCourses.length <= 0 ? (
+            <p style={{backgroundColor : "gray",padding : "5px", borderRadius : "10px"}}>No courses availabe in this category!</p>
+          ) : (
+            filteredCourses?.map((course) => (
+              <div key={course._id} className="courses-page__card">
+                <img
+                  src={course.image}
+                  alt={course.title}
+                  className="courses-page__card-image"
+                />
+                <div className="courses-page__card-content">
+                  <span className="courses-page__card-category">
+                    {course.category}
+                  </span>
+                  <h3 className="courses-page__card-title">{course.title}</h3>
+                  <p className="courses-page__card-description">
+                    {course.description}
+                  </p>
 
-                <div className="courses-page__card-details">
-                  <span>Duration {course.duration}/hrs</span>
-                  <span style={{
-                    textTransform : "capitalize",
-                    backgroundColor :"#000",
-                    color : "white",
-                    padding:"3px 10px",
-                    borderRadius : "20px"
-                  }}>{course.level}</span>
-                </div>
-
-                <div className="courses-page__card-instructor">
-                  <img
-                    src={course.instructor.image}
-                    alt={course.instructor.name}
-                  />
-                  <span>{course.instructor.name}</span>
-                </div>
-
-                <div className="courses-page__card-footer">
-                  <div className="rating">
-                    <FaStar color="#FFD700" />
-                    <span>
-                      {course.rating} ({course.reviews} reviews)
+                  <div className="courses-page__card-details">
+                    <span>Duration {course.duration}/hrs</span>
+                    <span
+                      style={{
+                        textTransform: "capitalize",
+                        backgroundColor: "#000",
+                        color: "white",
+                        padding: "3px 10px",
+                        borderRadius: "20px",
+                      }}
+                    >
+                      {course.level}
                     </span>
                   </div>
-                </div>
 
-                {user ? (
-                  <Link
-                    to={`/watch/${course._id}`}
-                    className="btn btn--primary btn--full"
-                    onClick={handleClick}
-                  >
-                    Watch Now
-                  </Link>
-                ) : (
-                  <button onClick={handleLockClick} className="watch-now-lock">
-                    Watch Now <FaLock />
-                  </button>
-                )}
+                  <div className="courses-page__card-instructor">
+                    <img
+                      src={course.instructor.image}
+                      alt={course.instructor.name}
+                    />
+                    <span>{course.instructor.name}</span>
+                  </div>
+
+                  <div className="courses-page__card-footer">
+                    <div className="rating">
+                      <FaStar color="#FFD700" />
+                      <span>
+                        {course.rating} ({course.reviews} reviews)
+                      </span>
+                    </div>
+                  </div>
+
+                  {user ? (
+                    <Link
+                      to={`/watch/${course._id}`}
+                      className="btn btn--primary btn--full"
+                      onClick={handleClick}
+                    >
+                      Watch Now
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={handleLockClick}
+                      className="watch-now-lock"
+                    >
+                      Watch Now <FaLock />
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>

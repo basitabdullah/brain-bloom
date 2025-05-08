@@ -138,13 +138,27 @@ function UpdateCourse() {
             </div>
             <div className="form-group">
               <label htmlFor="category">Category</label>
-              <input
-                type="text"
-                id="category"
+              <select
                 name="category"
                 value={courseData.category}
                 onChange={handleInputChange}
-              />
+                required
+                id="category"
+              >
+                <option value="development">Development</option>
+                <option value="business">Business</option>
+                <option value="finance-accounting">Finance & Accounting</option>
+                <option value="it-software">IT & Software</option>
+                <option value="network">Network</option>
+                <option value="ai">AI</option>
+                <option value="hardware-electronics">Hardware & Electronics</option>
+                <option value="science-engineering">Science & Engineering</option>
+                <option value="personal-development">Personal Development</option>
+                <option value="workout-diet">Workout and Diet</option>
+                <option value="sales-marketing">Sales & Marketing</option>
+                <option value="language-learning">Language Learning</option>
+                <option value="design-art">Design & Art</option>
+              </select>
             </div>
           </div>
 

@@ -33,6 +33,8 @@ import Profile from "./pages/Profile";
 import SubDetails from "./pages/SubDetails";
 import Subscribe from "./pages/Subscribe";
 import Privacy from "./components/Privacy";
+import ForgetPassword from "./pages/ForgetPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -83,6 +85,8 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/subscribe" element={<Subscribe />} />
               <Route path="/subscription-detail" element={<SubDetails />} />
+              <Route path="/forgot-password" element={<ForgetPassword />} />
+              <Route path="/reset-password/:token" element={<ResetPassword />} />
 
               <Route
                 path="/watch/:courseId"

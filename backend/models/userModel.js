@@ -52,6 +52,8 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  resetToken: String,
+  resetTokenExpiry: Date,
 });
 
 export const hashPassword = async (password) => {
